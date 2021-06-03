@@ -1,0 +1,30 @@
+.item{
+    border-left: 1px solid; 
+    margin-Right: 2vw; 
+    padding: 3px 1vw;
+}
+
+.hover_underline_animation{
+    display: inline-block;
+    position: relative;
+    color: #000000;
+}
+  
+.hover_underline_animation:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #02151f;
+    transform-origin: bottom center;
+    transition: transform 0.25s ease-out;
+}
+  
+.hover_underline_animation:hover:after{
+    color: #000000;
+    transform: scaleX(1);
+    transform-origin: bottom center;
+}

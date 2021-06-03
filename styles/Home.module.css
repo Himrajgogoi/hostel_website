@@ -1,0 +1,115 @@
+.container{
+    border:1px solid grey; 
+    min-height: 40vh;
+    margin: 4vh 6.5vw; 
+    padding: 3vh 5vw;
+}
+
+.alternate_container{
+    background-color: #FFF6F6;
+    min-height: 50vh;
+    margin: 4vh 6.5vw; 
+    padding: 3vh 2vw;
+}
+
+.alternate_content{
+    border-left: 1px solid grey;
+    padding: 0 3vw;
+}
+
+.content{
+    margin-top: 30vh;
+    color: white;
+}
+
+.flex_container{
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.flex_content{
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg/700px-Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid grey; 
+    min-height: 20vh;
+    margin: 2vh 1vw; 
+    padding: 2vh 1vw;
+}
+
+
+.flex_content_monitor{
+    border: 1px solid grey; 
+    min-height: 20vh;
+    margin: 2vh 1vw; 
+    padding: 2vh 1vw;
+}
+@media screen and (min-width: 900px) {
+    .flex_content{
+        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg/700px-Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 1px solid grey; 
+        min-height: 20vh;
+        margin: 2vh 1vw; 
+        padding: 2vh 1vw;
+        flex: 1 0 33%;
+    }
+
+    .flex_content_monitor{
+        border: 1px solid grey; 
+        min-height: 20vh;
+        margin: 2vh 1vw; 
+        padding: 2vh 1vw;
+        flex: 1 0 33%;
+    }
+    
+}
+
+.activities_achievements{
+    min-height: 40vh;
+    margin: 4vh 6.5vw; 
+    padding: 3vh 5vw;
+}
+
+.box_header{
+    border-bottom: 1px solid grey;
+}
+.image{
+    height: 90%;
+    width: 100%;
+}
+
+.image:hover{
+    transform: scale(1.06);
+    transition: 300ms ease-in-out;
+}
+
+
+.hover_underline_animation h2{
+    display: inline-block;
+    position: relative;
+    color: #000000;
+}
+  
+.hover_underline_animation h2:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #053f5c;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+  
+.hover_underline_animation:hover h2:after{
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
