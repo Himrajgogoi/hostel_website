@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useRouter} from "next/router";
 import Link from "next/link";
 import {
   NavbarToggler,
@@ -12,13 +13,45 @@ import {
 } from "reactstrap";
 import styles from "../styles/Header.module.css";
 import "font-awesome/css/font-awesome.min.css";
+import fire from "../config/fire_config";
 
 
 function Header() {
+
+
+  const router = useRouter();
   const [isOpen, setisOpen] = useState(false);
 
   const [modal, setModal] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [error, setError] = useState(' ');
+
+
+  ///user signIn
+  const[email, setEmail] = useState('');
+  const[password, setPassword] = useState('');
+   
+  const handleLogin = e =>{
+    e.preventDefault();
+    fire.auth().signInWithEmailAndPassword(email,password)
+    .catch((err)=>{
+      console.log(err);
+      setError(err.message)
+    })
+
+    setEmail('');
+    setPassword('');
+    setModal(!modal);
+  
+  }
+
+  const handleLogout = () =>{
+    fire.auth().signOut()
+    .then(()=>{
+      router.reload()
+    })
+  }
+
 
   return (
     <div>
@@ -26,7 +59,7 @@ function Header() {
         <span
           className="navbar-brand"
           href="#"
-          style={{ marginLeft: "2vw", marginRight: "65vw" }}
+          style={{ marginLeft: "2vw", marginRight: "60vw" }}
         >
           <b>Octave</b>
         </span>
@@ -52,21 +85,24 @@ function Header() {
             <li className={styles.item} onClick={() => setModal(!modal)}>
               <span  className={styles.hover_underline_animation}>Sign In</span>
             </li>
+            <li className={styles.item} onClick={() => setModal(!modal)}>
+              <span  className={styles.hover_underline_animation} onClick={()=>handleLogout()}>Sign Out</span>
+            </li>
           </ul>
         </Collapse>
       </nav>
       <Modal isOpen={modal}>
         <ModalBody>
           <span className="fa fa-close fa-lg" onClick={() => setModal(!modal)}></span>
-          <form>
+          <form onSubmit={handleLogin}>
             <div class="form-group">
-              <label for="username">Username</label>
+              <label for="username">Email</label>
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 id="username"
-                placeholder="Enter username"
-                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter email"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -82,6 +118,7 @@ function Header() {
             <button type="submit" className="btn btn-primary">
               Submit
             </button>
+            <div>{error}</div>
           </form>
         </ModalBody>
       </Modal>

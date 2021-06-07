@@ -1,3 +1,9 @@
+It is a simple website for my hostel, Octave in Jorhat Engineering College. This website has been made using  next.js and mongoDB.
+
+
+
+Default README.md starts here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 ## Example app using MongoDB
 
 [MongoDB](https://www.mongodb.com/) is a general purpose, document-based, distributed database built for modern application developers and for the cloud era. This example will show you how to connect to and use MongoDB as your backend for your Next.js app.

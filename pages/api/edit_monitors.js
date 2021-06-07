@@ -1,22 +1,41 @@
 import { ObjectId } from "bson";
 import { connectToDatabase } from "../../util/mongodb";
+import nextConnect from "next-connect";
+import multer from "multer";
+import {v2 as cloudinary} from "cloudinary";
 
-export default async function handler(req,res){
+
+const upload =multer({dest: "/public/temp"})
+
+const handler = nextConnect();
+
+handler.patch(upload.single('image'), async (req,res)=>{
     const {db} = await connectToDatabase();
 
-    if(req.method == 'PATCH'){
-        const id = req.body.id;
-        const name = req.body.Name;
-        const quote = req.body.Quote;
-        const designation = req.body.Designation;
-        const data = await db.collection('Monitors').updateOne({_id: ObjectId(id)},{$set:{Name:name, Designation:designation, Quote:quote}});
-        res.json(data);
+    let image;
+    if(req.file){
+        const img = await cloudinary.uploader.upload(req.file.path);
+        image = img.secure_url;
     }
+    const {id, name, designation, quote} = req.body;
+    const data = await db.collection('Monitors').updateOne({_id: ObjectId(id)},{$set:{Name:name, Designation:designation, Quote:quote,...(image &&{image})}});
+    res.json(data);
 
-    else if(req.method == "POST"){
-        const data = await db.collection('Monitors').insertOne(req.body);
-        res.json(data);
+
+})
+handler.post(upload.single('image'), async (req,res)=>{
+    const {db} = await connectToDatabase();
+    
+    let image;
+    if(req.file){
+        const img = await cloudinary.uploader.upload(req.file.path);
+        image = img.secure_url;
     }
+    const {name, designation, quote} = req.body;
+    const data = await db.collection('Monitors').insertOne({Name:name, Designation:designation, Quote:quote,image: image});
+    res.json(data);
 
 
-}
+})
+
+export default handler;

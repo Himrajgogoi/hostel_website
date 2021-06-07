@@ -7,6 +7,7 @@ import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import Footer from "../shared/Footer";
 import { Modal, ModalBody } from "reactstrap";
+import fire from "../config/fire_config";
 
 export default function Home({
   isConnected,
@@ -16,6 +17,7 @@ export default function Home({
 }) {
   const [header, setHeader] = useState(null);
   const [content, setContent] = useState(null);
+  const [image, setImage] = useState(null);
 
   const [name, setName] = useState(null);
   const [quote, setQuote] = useState(null);
@@ -25,95 +27,99 @@ export default function Home({
   const [modal, setModal] = useState(false);
   const [monitor_post, setMonitor] = useState(false);
 
-  const post_submit = async (flag, header, content) => {
-    const body = {
-      Header: header,
-      Content: content,
-    };
+
+  ///check user
+  const[loggedIn, setLoggedIn] = useState(false);
+
+  fire.auth().onAuthStateChanged((user)=>{
+    if(user){
+      console.log("user called");
+      setLoggedIn(true);
+    }
+    else{
+      setLoggedIn(false);
+    }
+  })
+
+  
+  const post_submit = async (flag, header, content, image) => {
+    
+    const form = new FormData();
+    form.append('header', header);
+    form.append('content', content);
+    form.append('image', image);
+
 
     if (flag === "activities_post") {
-      const data = await fetch("http://localhost:3000/api/edit_activities", {
+      const data = await fetch("/api/edit_activities", {
         method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: form
       });
     } 
     
     else if (flag === "achievements_post") {
-      const data = await fetch("http://localhost:3000/api/edit", {
+      const data = await fetch("/api/edit", {
         method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: form
       });
     }
   };
 
-  const post_monitor = async (name, designation, quote) => {
-    const body = {
-      Name: name,
-      Designation: designation,
-      Quote: quote,
-    };
+  const post_monitor = async (name, designation, quote, image) => {
+   
+    const form = new FormData();
+    form.append('name', name);
+    form.append('designation', designation);
+    form.append('quote', quote);
+    form.append('image', image);
+    
 
-    const data = await fetch("http://localhost:3000/api/edit_monitors", {
+
+    const data = await fetch("/api/edit_monitors", {
       method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body:form
     });
   };
 
-  const handleSubmit = async (id, header, content) => {
-    const body = {
-      id: id,
-      Header: header,
-      Content: content,
-    };
+  const handleSubmit = async (id, header, content,image) => {
+    
+    const form = new FormData();
+    form.append('id',id);
+    form.append('header', header);
+    form.append('content', content);
+    form.append('image', image);
 
-    const data = await fetch("http://localhost:3000/api/edit", {
+    const data = await fetch("/api/edit", {
       method: "PATCH",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: form
     });
   };
 
-  const handleSubmit_activities = async (id, header, content) => {
-    const body = {
-      id: id,
-      Header: header,
-      Content: content,
-    };
-
-    const data = await fetch("http://localhost:3000/api/edit_activities", {
+  const handleSubmit_activities = async (id, header, content, image) => {
+   
+    const form = new FormData();
+    form.append('id',id);
+    form.append('header', header);
+    form.append('content', content);
+    form.append('image', image);
+    const data = await fetch("/api/edit_activities", {
       method: "PATCH",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: form,
     });
   };
 
-  const handleSubmit_monitors = async (id, name, designation, quote) => {
-    const body = {
-      id: id,
-      Name: name,
-      Designation: designation,
-      Quote: quote,
-    };
+  const handleSubmit_monitors = async (id, name, designation, quote, image) => {
+    
+    const form = new FormData();
+    form.append('id', id)
+    form.append('name', name);
+    form.append('designation', designation);
+    form.append('quote', quote);
+    form.append('image', image);
 
-    const data = await fetch("http://localhost:3000/api/edit_monitors", {
+    const data = await fetch("/api/edit_monitors", {
       method: "PATCH",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: form
     });
   };
   if (!isConnected) {
@@ -300,7 +306,7 @@ export default function Home({
             className="fa fa-close fa-lg"
             onClick={() => setModal(!modal)}
           ></span>
-          <form onSubmit={() => post_submit(flag, header, content)}>
+          <form onSubmit={() => post_submit(flag, header, content, image)}>
             <div className="form-group">
               <label for="header">
                 <b>Header</b>
@@ -328,7 +334,7 @@ export default function Home({
               <label for="image">
                 <b>Image</b>
               </label>
-              <input type="file" className="form-control" id="image" />
+              <input type="file" className="form-control" id="image"  onChange={e=> setImage(e.target.files[0])}/>
             </div>
             <button type="submit" className="btn btn-primary">
               Post
@@ -344,7 +350,7 @@ export default function Home({
             </h2>
           </div>
           <div className="col-12 col-md-1 offset-md-5">
-            {activities.length < 4 ? (
+            {activities.length < 4 && loggedIn? (
               <i
                 className="fa fa-plus fa-lg"
                 onClick={() => {
@@ -364,10 +370,10 @@ export default function Home({
                   if (!edit) {
                     return (
                       <div className={styles.flex_content}>
-                        <i
+                        {loggedIn? <i
                           className="fa fa-edit fa-lg"
                           onClick={() => setEdit(!edit)}
-                        ></i>
+                        ></i>:<div></div>}
                         <h1 className={styles.content}>{activity.Header}</h1>
                         <small className={styles.content}>
                           {activity.Content}
@@ -388,7 +394,8 @@ export default function Home({
                               handleSubmit_activities(
                                 activity._id,
                                 header ?? activity.Header,
-                                content ?? activity.Content
+                                content ?? activity.Content,
+                                image
                               )
                             }
                           >
@@ -425,6 +432,7 @@ export default function Home({
                                 type="file"
                                 className="form-control"
                                 id="image"
+                                onChange={e=>setImage(e.target.files[0])}
                               />
                             </div>
                             <button type="submit" className="btn btn-primary">
@@ -448,7 +456,7 @@ export default function Home({
             <h2 className={styles.box_header}>Previous Achievements</h2>
           </div>
           <div className="col-12  col-md-1 offset-md-5">
-            {achievements.length < 4 ? (
+            {achievements.length < 4 && loggedIn? (
               <i
                 className="fa fa-plus fa-lg"
                 onClick={() => {
@@ -468,11 +476,11 @@ export default function Home({
                 const [edit, setEdit] = useState(false);
                 if (!edit) {
                   return (
-                    <div className={styles.flex_content}>
-                      <i
-                        className="fa fa-edit fa-lg"
-                        onClick={() => setEdit(!edit)}
-                      ></i>
+                    <div className={styles.flex_content} >
+                      {loggedIn? <i
+                          className="fa fa-edit fa-lg"
+                          onClick={() => setEdit(!edit)}
+                        ></i>:<div></div>}
                       <h1 className={styles.content}>{activity.Header}</h1>
                       <small className={styles.content}>
                         {activity.Content}
@@ -493,7 +501,8 @@ export default function Home({
                             handleSubmit(
                               activity._id,
                               header ?? activity.Header,
-                              content ?? activity.Content
+                              content ?? activity.Content,
+                              image
                             )
                           }
                         >
@@ -530,6 +539,7 @@ export default function Home({
                               type="file"
                               className="form-control"
                               id="image"
+                              onChange={e=>setImage(e.target.files[0])}
                             />
                           </div>
                           <button type="submit" className="btn btn-primary">
@@ -550,7 +560,7 @@ export default function Home({
         <i className="fa fa-close fa-lg" onClick={() => setMonitor(!monitor_post)}></i>
           <form
             onSubmit={() =>
-              post_monitor(name,designation,quote)
+              post_monitor(name,designation,quote, image)
             }
           >
             <div className="form-group">
@@ -592,7 +602,7 @@ export default function Home({
               <label for="image">
                 <b>Image</b>
               </label>
-              <input type="file" className="form-control" id="image" />
+              <input type="file" className="form-control" id="image"  onChange={e=>setImage(e.target.files[0])}/>
             </div>
             <button type="submit" className="btn btn-primary">
               Post
@@ -606,11 +616,10 @@ export default function Home({
             <h2 className={styles.box_header}>From present Monitors,</h2>
           </div>
           <div className="col-12 col-md-1 offset-md-5">
-            {activities.length < 4 ? (
+            {activities.length < 4 && loggedIn? (
               <i
                 className="fa fa-plus fa-lg"
                 onClick={() => {
-                  setFlag("activities_post");
                   setMonitor(!monitor_post);
                 }}
               ></i>
@@ -635,10 +644,10 @@ export default function Home({
                               />
                             </div>
                             <div className="col-12 col-md-6 order-md-1">
-                              <i
+                              {loggedIn?<i
                                 className="fa fa-edit fa-lg"
                                 onClick={() => setEdit(!edit)}
-                              ></i>
+                              ></i>:<div></div>}
                               <h2>"{monitor.Quote}"</h2>
                               <br></br>
                               <h5>{monitor.Name},</h5>
@@ -663,7 +672,8 @@ export default function Home({
                                 monitor._id,
                                 name ?? monitor.Name,
                                 designation ?? monitor.Designation,
-                                quote ?? monitor.Quote
+                                quote ?? monitor.Quote,
+                                image
                               )
                             }
                           >
@@ -713,6 +723,7 @@ export default function Home({
                                 type="file"
                                 className="form-control"
                                 id="image"
+                                onChange={e=>setImage(e.target.files[0])}
                               />
                             </div>
                             <button type="submit" className="btn btn-primary">
