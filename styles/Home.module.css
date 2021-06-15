@@ -29,7 +29,6 @@
 }
 
 .flex_content{
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg/700px-Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -48,7 +47,7 @@
 }
 @media screen and (min-width: 900px) {
     .flex_content{
-        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg/700px-Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg");
+       
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;

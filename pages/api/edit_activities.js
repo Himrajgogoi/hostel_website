@@ -36,6 +36,14 @@ handler.post(upload.single('image'), async (req,res)=>{
     res.json(data);
 })
 
+handler.delete(upload.single('image'), async (req,res)=>{
+    const {db} = await connectToDatabase();
+    const {id} = req.body;
+    
+    await db.collection('Activities').deleteOne({_id: ObjectId(id)});
+    res.statusCode(200);
+})
+
 export const config = {
     api: {
       bodyParser: false,

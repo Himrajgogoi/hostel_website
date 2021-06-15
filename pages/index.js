@@ -15,6 +15,10 @@ export default function Home({
   achievements,
   monitors,
 }) {
+  const FooterPage = () => {
+    return <Footer isConnected={isConnected} contact={monitors} />;
+  };
+
   const [header, setHeader] = useState(null);
   const [content, setContent] = useState(null);
   const [image, setImage] = useState(null);
@@ -22,111 +26,148 @@ export default function Home({
   const [name, setName] = useState(null);
   const [quote, setQuote] = useState(null);
   const [designation, setDesignation] = useState(null);
+  const [phone, setPhone] = useState(null);
 
   const [flag, setFlag] = useState(null);
   const [modal, setModal] = useState(false);
   const [monitor_post, setMonitor] = useState(false);
 
-
   ///check user
-  const[loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  fire.auth().onAuthStateChanged((user)=>{
-    if(user){
-      console.log("user called");
+  fire.auth().onAuthStateChanged((user) => {
+    if (user) {
       setLoggedIn(true);
-    }
-    else{
+    } else {
       setLoggedIn(false);
     }
-  })
+  });
 
-  
   const post_submit = async (flag, header, content, image) => {
-    
     const form = new FormData();
-    form.append('header', header);
-    form.append('content', content);
-    form.append('image', image);
-
+    form.append("header", header);
+    form.append("content", content);
+    form.append("image", image);
 
     if (flag === "activities_post") {
       const data = await fetch("/api/edit_activities", {
         method: "POST",
-        body: form
+        body: form,
       });
-    } 
-    
-    else if (flag === "achievements_post") {
+    } else if (flag === "achievements_post") {
       const data = await fetch("/api/edit", {
         method: "POST",
-        body: form
+        body: form,
       });
     }
   };
 
-  const post_monitor = async (name, designation, quote, image) => {
-   
+  const post_monitor = async (name, designation, quote, phone, image) => {
     const form = new FormData();
-    form.append('name', name);
-    form.append('designation', designation);
-    form.append('quote', quote);
-    form.append('image', image);
-    
-
+    form.append("name", name);
+    form.append("designation", designation);
+    form.append("quote", quote);
+    form.append("image", image);
+    form.append("phone", phone);
 
     const data = await fetch("/api/edit_monitors", {
       method: "POST",
-      body:form
+      body: form,
     });
   };
 
-  const handleSubmit = async (id, header, content,image) => {
-    
+  const handleSubmit = async (id, header, content, image) => {
     const form = new FormData();
-    form.append('id',id);
-    form.append('header', header);
-    form.append('content', content);
-    form.append('image', image);
+    form.append("id", id);
+    form.append("header", header);
+    form.append("content", content);
+    form.append("image", image);
 
     const data = await fetch("/api/edit", {
       method: "PATCH",
-      body: form
+      body: form,
     });
   };
 
   const handleSubmit_activities = async (id, header, content, image) => {
-   
     const form = new FormData();
-    form.append('id',id);
-    form.append('header', header);
-    form.append('content', content);
-    form.append('image', image);
+    form.append("id", id);
+    form.append("header", header);
+    form.append("content", content);
+    form.append("image", image);
     const data = await fetch("/api/edit_activities", {
       method: "PATCH",
       body: form,
     });
   };
 
-  const handleSubmit_monitors = async (id, name, designation, quote, image) => {
-    
+  const handleSubmit_monitors = async (
+    id,
+    name,
+    designation,
+    quote,
+    phone,
+    image
+  ) => {
     const form = new FormData();
-    form.append('id', id)
-    form.append('name', name);
-    form.append('designation', designation);
-    form.append('quote', quote);
-    form.append('image', image);
+    form.append("id", id);
+    form.append("name", name);
+    form.append("designation", designation);
+    form.append("quote", quote);
+    form.append("image", image);
+    form.append("phone", phone);
 
     const data = await fetch("/api/edit_monitors", {
       method: "PATCH",
-      body: form
+      body: form,
     });
+  };
+
+  const delete_activity = async (id) => {
+
+    const form = new FormData();
+    form.append('id', id)
+    
+    await fetch("/api/edit_activities", {
+      method: "DELETE",
+      body: form,
+    });
+
+    window.location.reload()
+   
+  };
+
+  const delete_achievement = async (id) => {
+    
+    const form = new FormData();
+    form.append('id', id)
+
+    await fetch("/api/edit", {
+      method: "DELETE",
+      body: form,
+    });
+
+    window.location.reload()
+  };
+
+  const delete_monitor = async (id) => {
+    
+    const form = new FormData();
+    form.append('id', id)
+
+    await fetch("/api/edit_monitors", {
+      method: "DELETE",
+      body: form,
+    });
+
+    window.location.reload()
   };
   if (!isConnected) {
     return (
       <div>
         <Head>
           <title>Octave | home</title>
+          <link rel="icon" href="/logo_fvt.ico"></link>
         </Head>
         <Header />
         <div className="container">
@@ -142,6 +183,7 @@ export default function Home({
     <div>
       <Head>
         <title>Octave | home</title>
+        <link rel="icon" href="/logo_fvt.ico"></link>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap"
@@ -176,21 +218,17 @@ export default function Home({
             <div className="col-12">
               <h2 className={styles.hover_underline_animation}>About us</h2>
               <p>
-                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                quae ab illo inventore veritatis et quasi architecto beatae
-                vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                voluptas sit aspernatur aut odit aut fugit, sed quia
-                consequuntur magni dolores eos qui ratione voluptatem sequi
-                nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-                sit amet, consectetur, adipisci velit, sed quia non numquam eius
-                modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                voluptatem. Ut enim ad minima veniam, quis nostrum
-                exercitationem ullam corporis suscipit laboriosam, nisi ut
-                aliquid ex ea commodi consequatur? Quis autem vel eum iure
-                reprehenderit qui in ea voluptate velit esse quam nihil
-                molestiae consequatur, vel illum qui dolorem eum fugiat quo
-                voluptas nulla pariatur?"
+                Established in 1984 and hence the youngest among all the
+                hostels, we have produced some of the most well established
+                individuals in Assam as well as in India and abroad. We nurture
+                a sense of brotherhood among us that transcends the walls of
+                this hostel; borthers for life, as we all say, once an Octavian
+                always an Octavian. College life is one of the most pivotal part
+                of our lives, full of learning, failing and succeeding; we try
+                to mold our boarders into individuals who can survive in this
+                fast changing world. One must learn to be resourceful as well as
+                be able to manage situations in order to grow in today's world
+                and what better place to learn all this than a hostel.
               </p>
             </div>
           </div>
@@ -214,20 +252,13 @@ export default function Home({
               <div className="col-12 col-md-6 offset-md-1">
                 <div>
                   <p>
-                    "Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium doloremque laudantium, totam rem
-                    aperiam, eaque ipsa quae ab illo inventore veritatis et
-                    quasi architecto beatae vitae dicta sunt explicabo. Nemo
-                    enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-                    aut fugit, sed quia consequuntur magni dolores eos qui
-                    ratione voluptatem sequi nesciunt. Neque porro quisquam est,
-                    qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-                    velit, sed quia non numquam eius modi tempora incidunt ut
-                    labore et dolore magnam aliquam quaerat voluptatem. Ut enim
-                    ad minima veniam, quis nostrum exercitationem ullam corporis
-                    suscipit laboriosam, nisi ut aliquid ex ea commodi
-                    consequatur? Quis autem vel eum iure reprehenderit qui in ea
-                    voluptate "
+                    Located in the Southeastern part of this sprawling college
+                    campus, far away from all the noise of a town, nature is
+                    just outside the door. With a forest on one side, decent
+                    playground behind and a garden upfront, the environment is
+                    just right to nestle an individual. One can feel a sense of
+                    calm and peace breathing in the air around here; an ecstacy
+                    one can hardly let go off.
                   </p>
                 </div>
               </div>
@@ -244,12 +275,13 @@ export default function Home({
           <div className="col-12 col-md-6 offset-md-1">
             <div className={styles.alternate_content}>
               <p>
-                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                quae ab illo inventore veritatis et quasi architecto beatae
-                vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                voluptas sit aspernatur aut odit aut fugit, sed quia
-                consequuntur magni dolores eos qui ratione voluptatem
+                From the seniormost to the freshers, all the batches live
+                together in harmony, learning and growing as one is made to
+                understand the traditions of our hostel. There are a ton of
+                tournaments and competitions all year long in which all the
+                batches participate as a team bringing laurels to our hostel. We
+                come here as strangers, but leave as brothers; brothers for
+                life. That's the beauty of our hostel.
               </p>
               <img
                 className={`img-fluid ${styles.image}`}
@@ -275,19 +307,19 @@ export default function Home({
             <div className="row">
               <div className="col-12 col-md-6">
                 <p>
-                  "Sed ut perspiciatis unde omnis iste natus error sit
-                  voluptatem accusantium doloremque laudantium, totam rem
-                  aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                  architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-                  voluptatem quia voluptas sit aspernatur aut odit aut fugit,
-                  sed quia consequuntur magni dolores eos qui ratione voluptatem
-                  sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum
-                  quia dolor sit amet, consectetur, adipisci velit, sed quia non
-                  numquam eius modi tempora incidunt ut labore et dolore magnam
-                  aliquam quaerat voluptatem. Ut enim ad minima veniam, quis
-                  nostrum exercitationem ullam corporis suscipit laboriosam,
-                  nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum
-                  iure reprehenderit qui in ea voluptate "
+                  Built in the form of H, our hostel boasts 32 rooms, 1 common
+                  room, 1 gym-cum-library room, 1 mess and 4 washrooms. The
+                  common room is the pride of the hostel, as it serves as the
+                  hosting venue for various celebrations like freshers,
+                  farewell, distinguised guests. It is christened with all the
+                  trophies, medals and commendations that our hostel has
+                  garnered over the years. Apart from all this, it also serves
+                  as a place of rejuvination. One can relax, have a chat, watch
+                  some tv and even engage in some carrom with each other. We
+                  believe an individual must excel not only in academics, but
+                  also in other activities, as such we have indoor games like
+                  Table Tenis, Carrom, Chess etc. and outdoor games as well like
+                  Badminton, Cricket, Football, Volleyball to name a few.
                 </p>
               </div>
               <div className={`col-12 col-md-5 offset-md-1 `}>
@@ -334,7 +366,12 @@ export default function Home({
               <label for="image">
                 <b>Image</b>
               </label>
-              <input type="file" className="form-control" id="image"  onChange={e=> setImage(e.target.files[0])}/>
+              <input
+                type="file"
+                className="form-control"
+                id="image"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
             </div>
             <button type="submit" className="btn btn-primary">
               Post
@@ -350,7 +387,7 @@ export default function Home({
             </h2>
           </div>
           <div className="col-12 col-md-1 offset-md-5">
-            {activities.length < 4 && loggedIn? (
+            {activities.length < 4 && loggedIn ? (
               <i
                 className="fa fa-plus fa-lg"
                 onClick={() => {
@@ -369,15 +406,36 @@ export default function Home({
                   const [edit, setEdit] = useState(false);
                   if (!edit) {
                     return (
-                      <div className={styles.flex_content}>
-                        {loggedIn? <i
-                          className="fa fa-edit fa-lg"
-                          onClick={() => setEdit(!edit)}
-                        ></i>:<div></div>}
+                      <div
+                        className={styles.flex_content}
+                        style={{
+                          backgroundImage: `url(${
+                            activity.image ??
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg/700px-Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg"
+                          }`,
+                        }}
+                      >
+                        {loggedIn ? (
+                          <i
+                            className="fa fa-edit fa-lg"
+                            onClick={() => setEdit(!edit)}
+                          ></i>
+                        ) : (
+                          <div></div>
+                        )}
                         <h1 className={styles.content}>{activity.Header}</h1>
                         <small className={styles.content}>
                           {activity.Content}
                         </small>
+                        <br></br>
+                        {loggedIn ? (
+                          <i
+                            className="fa fa-trash fa-lg" style={{color:'white'}}
+                            onClick={() => delete_activity(activity._id)}
+                          ></i>
+                        ) : (
+                          <div></div>
+                        )}
                       </div>
                     );
                   }
@@ -432,7 +490,7 @@ export default function Home({
                                 type="file"
                                 className="form-control"
                                 id="image"
-                                onChange={e=>setImage(e.target.files[0])}
+                                onChange={(e) => setImage(e.target.files[0])}
                               />
                             </div>
                             <button type="submit" className="btn btn-primary">
@@ -456,7 +514,7 @@ export default function Home({
             <h2 className={styles.box_header}>Previous Achievements</h2>
           </div>
           <div className="col-12  col-md-1 offset-md-5">
-            {achievements.length < 4 && loggedIn? (
+            {achievements.length < 4 && loggedIn ? (
               <i
                 className="fa fa-plus fa-lg"
                 onClick={() => {
@@ -476,15 +534,36 @@ export default function Home({
                 const [edit, setEdit] = useState(false);
                 if (!edit) {
                   return (
-                    <div className={styles.flex_content} >
-                      {loggedIn? <i
+                    <div
+                      className={styles.flex_content}
+                      style={{
+                        backgroundImage: `url(${
+                          activity.image ??
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg/700px-Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg"
+                        }`,
+                      }}
+                    >
+                      {loggedIn ? (
+                        <i
                           className="fa fa-edit fa-lg"
                           onClick={() => setEdit(!edit)}
-                        ></i>:<div></div>}
+                        ></i>
+                      ) : (
+                        <div></div>
+                      )}
                       <h1 className={styles.content}>{activity.Header}</h1>
                       <small className={styles.content}>
                         {activity.Content}
                       </small>
+                      <br></br>
+                      {loggedIn ? (
+                        <i
+                          className="fa fa-trash fa-lg" style={{color:'white'}}
+                          onClick={() => delete_achievement(activity._id)}
+                        ></i>
+                      ) : (
+                        <div></div>
+                      )}
                     </div>
                   );
                 }
@@ -539,7 +618,7 @@ export default function Home({
                               type="file"
                               className="form-control"
                               id="image"
-                              onChange={e=>setImage(e.target.files[0])}
+                              onChange={(e) => setImage(e.target.files[0])}
                             />
                           </div>
                           <button type="submit" className="btn btn-primary">
@@ -557,10 +636,13 @@ export default function Home({
       </div>
       <Modal isOpen={monitor_post}>
         <ModalBody>
-        <i className="fa fa-close fa-lg" onClick={() => setMonitor(!monitor_post)}></i>
+          <i
+            className="fa fa-close fa-lg"
+            onClick={() => setMonitor(!monitor_post)}
+          ></i>
           <form
             onSubmit={() =>
-              post_monitor(name,designation,quote, image)
+              post_monitor(name, designation, quote, phone, image)
             }
           >
             <div className="form-group">
@@ -599,10 +681,26 @@ export default function Home({
               />
             </div>
             <div className="form-group">
+              <label for="phone">
+                <b>Phone</b>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="phone"
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
               <label for="image">
                 <b>Image</b>
               </label>
-              <input type="file" className="form-control" id="image"  onChange={e=>setImage(e.target.files[0])}/>
+              <input
+                type="file"
+                className="form-control"
+                id="image"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
             </div>
             <button type="submit" className="btn btn-primary">
               Post
@@ -616,7 +714,7 @@ export default function Home({
             <h2 className={styles.box_header}>From present Monitors,</h2>
           </div>
           <div className="col-12 col-md-1 offset-md-5">
-            {activities.length < 4 && loggedIn? (
+            {monitors.length < 4 && loggedIn ? (
               <i
                 className="fa fa-plus fa-lg"
                 onClick={() => {
@@ -640,18 +738,33 @@ export default function Home({
                             <div className="col-12 col-md-6 order-md-2">
                               <img
                                 className={`img-fluid ${styles.image}`}
-                                src="/hostel/hostel_inside.jpg"
+                                src={
+                                  monitor.image ?? "/hostel/hostel_inside.jpg"
+                                }
                               />
                             </div>
                             <div className="col-12 col-md-6 order-md-1">
-                              {loggedIn?<i
-                                className="fa fa-edit fa-lg"
-                                onClick={() => setEdit(!edit)}
-                              ></i>:<div></div>}
+                              {loggedIn ? (
+                                <i
+                                  className="fa fa-edit fa-lg"
+                                  onClick={() => setEdit(!edit)}
+                                ></i>
+                              ) : (
+                                <div></div>
+                              )}
                               <h2>"{monitor.Quote}"</h2>
                               <br></br>
                               <h5>{monitor.Name},</h5>
                               <small>{monitor.Designation}</small>
+                              <br></br>
+                              {loggedIn ? (
+                                <i
+                                  className="fa fa-trash fa-lg"
+                                  onClick={() => delete_monitor(monitor._id)}
+                                ></i>
+                              ) : (
+                                <div></div>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -673,6 +786,7 @@ export default function Home({
                                 name ?? monitor.Name,
                                 designation ?? monitor.Designation,
                                 quote ?? monitor.Quote,
+                                phone ?? monitor.Phone,
                                 image
                               )
                             }
@@ -714,6 +828,18 @@ export default function Home({
                                 id="content"
                                 onChange={(e) => setQuote(e.target.value)}
                               />
+                              <div className="form-group">
+                                <label for="phone">
+                                  <b>Phone</b>
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder={monitor.Phone ?? " "}
+                                  id="phone"
+                                  onChange={(e) => setPhone(e.target.value)}
+                                />
+                              </div>
                             </div>
                             <div className="form-group">
                               <label for="image">
@@ -723,7 +849,7 @@ export default function Home({
                                 type="file"
                                 className="form-control"
                                 id="image"
-                                onChange={e=>setImage(e.target.files[0])}
+                                onChange={(e) => setImage(e.target.files[0])}
                               />
                             </div>
                             <button type="submit" className="btn btn-primary">
@@ -740,7 +866,7 @@ export default function Home({
           </div>
         </div>
       </div>
-      <Footer />
+      <FooterPage />
       <style jsx global>{`
         h2,
         p,

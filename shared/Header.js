@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import {useRouter} from "next/router";
-import Link from "next/link";
 import {
   NavbarToggler,
   Collapse,
   Modal,
   ModalBody,
-  DropdownMenu,
-  DropdownItem,
-  Dropdown,
-  DropdownToggle
 } from "reactstrap";
 import styles from "../styles/Header.module.css";
 import "font-awesome/css/font-awesome.min.css";
@@ -59,8 +54,9 @@ function Header() {
         <span
           className="navbar-brand"
           href="#"
-          style={{ marginLeft: "2vw", marginRight: "60vw" }}
+          style={{ marginLeft: "2vw", marginRight: "55vw" }}
         >
+            <img src="/hostel/logo.jpg" className="img-fluid" height="45vh" width="45vw"/>
           <b>Octave</b>
         </span>
         <NavbarToggler onClick={() => setisOpen(!isOpen)}>
@@ -70,14 +66,6 @@ function Header() {
           <ul className="navbar-nav">
             <li className={styles.item}>
               <a href="/" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Home</span></a>
-              {/* <Dropdown isOpen={menu} toggle={()=>setMenu(!menu)}>
-                <DropdownToggle caret  className={styles.item}> 
-                    home
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem>About Us</DropdownItem>
-                </DropdownMenu>
-              </Dropdown> */}
             </li>
             <li className={styles.item}>
               <a href="/brief_history" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Brief History</span></a>
