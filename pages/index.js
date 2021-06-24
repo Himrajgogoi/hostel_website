@@ -15,9 +15,7 @@ export default function Home({
   achievements,
   monitors,
 }) {
-  const FooterPage = () => {
-    return <Footer isConnected={isConnected} contact={monitors} />;
-  };
+  
 
   const [header, setHeader] = useState(null);
   const [content, setContent] = useState(null);
@@ -176,9 +174,15 @@ export default function Home({
             connection!
           </p>
         </div>
+        <Footer/>
       </div>
     );
   }
+  else{
+  const FooterPage = () => {
+    return <Footer isConnected={isConnected} contact={monitors} />;
+  };
+
   return (
     <div>
       <Head>
@@ -244,7 +248,7 @@ export default function Home({
             </div>
             <div className="row">
               <div className="col-12 col-md-5">
-                <img
+                <img alt="hostel image"
                   className={`img-fluid ${styles.image}`}
                   src="/hostel/hostel_sidegate.jpg"
                 />
@@ -283,7 +287,7 @@ export default function Home({
                 come here as strangers, but leave as brothers; brothers for
                 life. That's the beauty of our hostel.
               </p>
-              <img
+              <img alt="hostel image"
                 className={`img-fluid ${styles.image}`}
                 src="/hostel/street_play.jpg"
               />
@@ -323,7 +327,7 @@ export default function Home({
                 </p>
               </div>
               <div className={`col-12 col-md-5 offset-md-1 `}>
-                <img
+                <img alt="hostel image"
                   className={`img-fluid ${styles.image}`}
                   src="/hostel/hostel_inside.jpg"
                 />
@@ -387,7 +391,7 @@ export default function Home({
             </h2>
           </div>
           <div className="col-12 col-md-1 offset-md-5">
-            {activities.length < 4 && loggedIn ? (
+            {activities.length < 6 && loggedIn ? (
               <i
                 className="fa fa-plus fa-lg"
                 onClick={() => {
@@ -514,7 +518,7 @@ export default function Home({
             <h2 className={styles.box_header}>Previous Achievements</h2>
           </div>
           <div className="col-12  col-md-1 offset-md-5">
-            {achievements.length < 4 && loggedIn ? (
+            {achievements.length < 6 && loggedIn ? (
               <i
                 className="fa fa-plus fa-lg"
                 onClick={() => {
@@ -736,7 +740,7 @@ export default function Home({
                         <div className="container">
                           <div className="row">
                             <div className="col-12 col-md-6 order-md-2">
-                              <img
+                              <img alt="hostel image"
                                 className={`img-fluid ${styles.image}`}
                                 src={
                                   monitor.image ?? "/hostel/hostel_inside.jpg"
@@ -882,6 +886,7 @@ export default function Home({
       `}</style>
     </div>
   );
+      }
 }
 
 export async function getServerSideProps(context) {

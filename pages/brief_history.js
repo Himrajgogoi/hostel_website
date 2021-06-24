@@ -38,7 +38,7 @@ function brief_history() {
               </div>
               <div className="col-12 col-md-5 offset-md-1">
                 <div>
-                  <img
+                  <img alt="hostel image"
                     className={`img-fluid ${styles.image}`}
                     src="/hostel/hostel_sidegate.jpg"
                   />
@@ -52,7 +52,7 @@ function brief_history() {
                 <p>
                   The hostel has been under the supervision of several Superintendents, namely the aforementioned firsts, Dr. Manabendra Bhuyan, Dr Prasanna Khaund, Dr Parimal Bakul Barua for a lengthy tenure of 17 years, Dr. Dilip Kakati and the current superintendent 
                   Mr. Bijoy Roy. The rear side of Octave has now been demarcated by the boundaries of Assam Women's University, thereby curbing the boarders of their hitherto favourite place for nighttime pursuits in the southern side. For many years, this hostel had 
-                  singular water supply arranged and aided by the Octave batch og 1995-99 which was a boon for its boarders in comparison to the acute water shortage faced by the Joencovites and hence mitigating the August water borne epidemics.
+                  singular water supply arranged and aided by the Octave batch of 1995-99 which was a boon for its boarders in comparison to the acute water shortage faced by the Joencovites and hence mitigating the August water borne epidemics.
                 </p>
                 
               </div>
@@ -61,7 +61,7 @@ function brief_history() {
             <br></br>
             <div className="row">
               <div className="col-12 col-md-5">
-                <img
+                <img alt="hostel image"
                   className={`img-fluid ${styles.image}`}
                   src="/hostel/hostel_inside.jpg"
                 />
@@ -71,7 +71,7 @@ function brief_history() {
                   The hostel celebrated its Silver Jubliee on 27th and 28th April, 2011 with pomp and grandeur. That coming together of 27 passout batches along with its then-existing boarders was a festive and emotional highpoint of joy and nostalgia. The moments of joy in the faces
                   of the families of 4 departed Octavian brothers brought unforseen cherished sanctity of a brotherhood beyond compare. Long Live Octave, long live the spirit of Octavians.
                 </p>
-                <small>- Hrishikesh Mali</small>
+                <small>- Hrishikesh Mali, former boarder of Octave.</small>
               </div>
             </div>
           </div>
