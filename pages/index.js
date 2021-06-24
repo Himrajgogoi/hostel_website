@@ -43,7 +43,6 @@ export default function Home({
   });
 
   const post_submit = async (e,flag, header, content, image) => {
-    e.preventDefault();
     const form = new FormData();
     form.append("header", header);
     form.append("content", content);
@@ -61,7 +60,7 @@ export default function Home({
   };
 
   const post_monitor = async (e,name, designation, quote, phone, image) => {
-    e.preventDefault()
+ 
     const form = new FormData();
     form.append("name", name);
     form.append("designation", designation);
@@ -76,7 +75,6 @@ export default function Home({
   };
 
   const handleSubmit = async (e,id, header, content, image) => {
-    e.preventDefault()
     const form = new FormData();
     form.append("id", id);
     form.append("header", header);
@@ -91,7 +89,7 @@ export default function Home({
   };
 
   const handleSubmit_activities = async (e,id, header, content, image) => {
-    e.preventDefault()
+   
     const form = new FormData();
     form.append("id", id);
     form.append("header", header);
@@ -113,7 +111,7 @@ export default function Home({
     phone,
     image
   ) => {
-    e.preventDefault()
+   
     const form = new FormData();
     form.append("id", id);
     form.append("name", name);
@@ -130,7 +128,7 @@ export default function Home({
   };
 
   const delete_activity = async (e,id) => {
-    e.preventDefault()
+  
     const form = new FormData();
     form.append('id', id)
     
@@ -145,7 +143,7 @@ export default function Home({
   };
 
   const delete_achievement = async (e,id) => {
-    e.preventDefault()
+  
     const form = new FormData();
     form.append('id', id)
 
@@ -157,7 +155,7 @@ export default function Home({
   };
 
   const delete_monitor = async (e,id) => {
-    e.preventDefault()
+  
     const form = new FormData();
     form.append('id', id)
 
@@ -350,7 +348,7 @@ export default function Home({
             className="fa fa-close fa-lg"
             onClick={() => setModal(!modal)}
           ></span>
-          <form onSubmit={(e) => post_submit(e,flag, header, content, image)}>
+          <form   onSubmit={(e) =>{post_submit(e,flag, header, content, image);}}>
             <div className="form-group">
               <label for="header">
                 <b>Header</b>
@@ -385,7 +383,7 @@ export default function Home({
                 onChange={(e) => setImage(e.target.files[0])}
               />
             </div>
-            <button type="submit" className="btn btn-primary"  >
+            <button type="submit" className="btn btn-primary">
               Post
             </button>
           </form>
@@ -741,8 +739,8 @@ export default function Home({
             <div className="col-12">
               <div className={styles.flex_container}>
                 {monitors.map((monitor) => {
-                  const [edit, setEdit] = useState(false);
-                  if (!edit) {
+                  const [edit_monitor, setEdit] = useState(false);
+                  if (!edit_monitor) {
                     return (
                       <div key={monitor._id} className={styles.flex_content_monitor}>
                         <div className="container">
@@ -759,7 +757,7 @@ export default function Home({
                               {loggedIn ? (
                                 <i
                                   className="fa fa-edit fa-lg"
-                                  onClick={() => setEdit(!edit)}
+                                  onClick={() => setEdit(!edit_monitor)}
                                 ></i>
                               ) : (
                                 <div></div>
@@ -789,7 +787,7 @@ export default function Home({
                         <div className="col-12">
                           <i
                             className="fa fa-close fa-lg"
-                            onClick={() => setEdit(!edit)}
+                            onClick={() => setEdit(!edit_monitor)}
                           ></i>
                           <form
                             onSubmit={(e) =>

@@ -5,7 +5,7 @@ import multer from "multer";
 import {v2 as cloudinary} from "cloudinary";
 
 
-const upload =multer({dest: "/public/temp"})
+const upload =multer({dest: "/temp"})
 
 const handler = nextConnect();
 
