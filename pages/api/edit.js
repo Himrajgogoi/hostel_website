@@ -26,7 +26,8 @@ handler.patch(upload.single('image'), async (req,res)=>{
 
 handler.post(upload.single('image'), async (req,res)=>{
     const {db} = await connectToDatabase();
-
+    
+    console.log("posted");
     let image;
     if(req.file){
         const img = await cloudinary.uploader.upload(req.file.path);

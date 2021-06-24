@@ -8,6 +8,7 @@ import { useState } from "react";
 import Footer from "../shared/Footer";
 import { Modal, ModalBody } from "reactstrap";
 import fire from "../config/fire_config";
+import axios from "axios";
 
 export default function Home({
   isConnected,
@@ -47,16 +48,14 @@ export default function Home({
     form.append("content", content);
     form.append("image", image);
 
+    console.log("called");
+
     if (flag === "activities_post") {
-      const data = await fetch("/api/edit_activities", {
-        method: "POST",
-        body: form,
-      });
+      const data =await axios.post("/api/edit_activities",form);
+
     } else if (flag === "achievements_post") {
-      const data = await fetch("/api/edit", {
-        method: "POST",
-        body: form,
-      });
+      const data =await axios.post("/api/edit",form);
+      
     }
 
     e.preventDefault();
@@ -234,7 +233,7 @@ export default function Home({
             <div className="col-12">
               <h2 className={styles.hover_underline_animation}>About us</h2>
               <p>
-                Established in 1984 and hence the youngest among all the
+                Established in 1984 and hence the youngest among all the boys 
                 hostels, we have produced some of the most well established
                 individuals in Assam as well as in India and abroad. We nurture
                 a sense of brotherhood among us that transcends the walls of
