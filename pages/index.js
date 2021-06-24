@@ -41,7 +41,7 @@ export default function Home({
     }
   });
 
-  const post_submit = async (flag, header, content, image) => {
+  const post_submit = async (e,flag, header, content, image) => {
     const form = new FormData();
     form.append("header", header);
     form.append("content", content);
@@ -58,9 +58,12 @@ export default function Home({
         body: form,
       });
     }
+
+    e.preventDefault();
   };
 
-  const post_monitor = async (name, designation, quote, phone, image) => {
+  const post_monitor = async (e,name, designation, quote, phone, image) => {
+   
     const form = new FormData();
     form.append("name", name);
     form.append("designation", designation);
@@ -72,9 +75,11 @@ export default function Home({
       method: "POST",
       body: form,
     });
+    e.preventDefault()
   };
 
-  const handleSubmit = async (id, header, content, image) => {
+  const handleSubmit = async (e,id, header, content, image) => {
+    
     const form = new FormData();
     form.append("id", id);
     form.append("header", header);
@@ -85,9 +90,11 @@ export default function Home({
       method: "PATCH",
       body: form,
     });
+    e.preventDefault()
   };
 
-  const handleSubmit_activities = async (id, header, content, image) => {
+  const handleSubmit_activities = async (e,id, header, content, image) => {
+    
     const form = new FormData();
     form.append("id", id);
     form.append("header", header);
@@ -97,9 +104,11 @@ export default function Home({
       method: "PATCH",
       body: form,
     });
+    e.preventDefault()
   };
 
   const handleSubmit_monitors = async (
+    e,
     id,
     name,
     designation,
@@ -107,6 +116,7 @@ export default function Home({
     phone,
     image
   ) => {
+   
     const form = new FormData();
     form.append("id", id);
     form.append("name", name);
@@ -119,10 +129,11 @@ export default function Home({
       method: "PATCH",
       body: form,
     });
+    e.preventDefault()
   };
 
-  const delete_activity = async (id) => {
-
+  const delete_activity = async (e,id) => {
+    
     const form = new FormData();
     form.append('id', id)
     
@@ -130,12 +141,13 @@ export default function Home({
       method: "DELETE",
       body: form,
     });
+    e.preventDefault()
 
     window.location.reload()
    
   };
 
-  const delete_achievement = async (id) => {
+  const delete_achievement = async (e,id) => {
     
     const form = new FormData();
     form.append('id', id)
@@ -144,11 +156,11 @@ export default function Home({
       method: "DELETE",
       body: form,
     });
-
+    e.preventDefault()
     window.location.reload()
   };
 
-  const delete_monitor = async (id) => {
+  const delete_monitor = async (e,id) => {
     
     const form = new FormData();
     form.append('id', id)
@@ -157,7 +169,7 @@ export default function Home({
       method: "DELETE",
       body: form,
     });
-
+    e.preventDefault()
     window.location.reload()
   };
   if (!isConnected) {
@@ -342,7 +354,7 @@ export default function Home({
             className="fa fa-close fa-lg"
             onClick={() => setModal(!modal)}
           ></span>
-          <form onSubmit={() => post_submit(flag, header, content, image)}>
+          <form onSubmit={(e) => post_submit(e,flag, header, content, image)}>
             <div className="form-group">
               <label for="header">
                 <b>Header</b>
@@ -435,7 +447,7 @@ export default function Home({
                         {loggedIn ? (
                           <i
                             className="fa fa-trash fa-lg" style={{color:'white'}}
-                            onClick={() => delete_activity(activity._id)}
+                            onClick={(e) => delete_activity(e,activity._id)}
                           ></i>
                         ) : (
                           <div></div>
@@ -452,8 +464,8 @@ export default function Home({
                             onClick={() => setEdit(!edit)}
                           ></i>
                           <form
-                            onSubmit={() =>
-                              handleSubmit_activities(
+                            onSubmit={(e) =>
+                              handleSubmit_activities(e,
                                 activity._id,
                                 header ?? activity.Header,
                                 content ?? activity.Content,
@@ -563,7 +575,7 @@ export default function Home({
                       {loggedIn ? (
                         <i
                           className="fa fa-trash fa-lg" style={{color:'white'}}
-                          onClick={() => delete_achievement(activity._id)}
+                          onClick={(e) => delete_achievement(e,activity._id)}
                         ></i>
                       ) : (
                         <div></div>
@@ -580,8 +592,8 @@ export default function Home({
                           onClick={() => setEdit(!edit)}
                         ></i>
                         <form
-                          onSubmit={() =>
-                            handleSubmit(
+                          onSubmit={(e) =>
+                            handleSubmit(e,
                               activity._id,
                               header ?? activity.Header,
                               content ?? activity.Content,
@@ -645,8 +657,8 @@ export default function Home({
             onClick={() => setMonitor(!monitor_post)}
           ></i>
           <form
-            onSubmit={() =>
-              post_monitor(name, designation, quote, phone, image)
+            onSubmit={(e) =>
+              post_monitor(e,name, designation, quote, phone, image)
             }
           >
             <div className="form-group">
@@ -764,7 +776,7 @@ export default function Home({
                               {loggedIn ? (
                                 <i
                                   className="fa fa-trash fa-lg"
-                                  onClick={() => delete_monitor(monitor._id)}
+                                  onClick={(e) => delete_monitor(e,monitor._id)}
                                 ></i>
                               ) : (
                                 <div></div>
@@ -784,8 +796,8 @@ export default function Home({
                             onClick={() => setEdit(!edit)}
                           ></i>
                           <form
-                            onSubmit={() =>
-                              handleSubmit_monitors(
+                            onSubmit={(e) =>
+                              handleSubmit_monitors(e,
                                 monitor._id,
                                 name ?? monitor.Name,
                                 designation ?? monitor.Designation,
