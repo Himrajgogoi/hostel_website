@@ -21,7 +21,7 @@ function Footer({ isConnected, contact }) {
               <b className={styles.text}>Present Monitors: </b>
               <ul>
                 {contact.map((con) => (
-                  <li>
+                  <li key={con._id}>
                     <small className={styles.text}>
                       {con.Name}: {con.Phone}
                     </small>

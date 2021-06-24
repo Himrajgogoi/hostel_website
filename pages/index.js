@@ -43,6 +43,7 @@ export default function Home({
   });
 
   const post_submit = async (e,flag, header, content, image) => {
+    e.preventDefault();
     const form = new FormData();
     form.append("header", header);
     form.append("content", content);
@@ -57,12 +58,10 @@ export default function Home({
       const data =await axios.post("/api/edit",form);
       
     }
-
-    e.preventDefault();
   };
 
   const post_monitor = async (e,name, designation, quote, phone, image) => {
-   
+    e.preventDefault()
     const form = new FormData();
     form.append("name", name);
     form.append("designation", designation);
@@ -74,11 +73,10 @@ export default function Home({
       method: "POST",
       body: form,
     });
-    e.preventDefault()
   };
 
   const handleSubmit = async (e,id, header, content, image) => {
-    
+    e.preventDefault()
     const form = new FormData();
     form.append("id", id);
     form.append("header", header);
@@ -89,11 +87,11 @@ export default function Home({
       method: "PATCH",
       body: form,
     });
-    e.preventDefault()
+    
   };
 
   const handleSubmit_activities = async (e,id, header, content, image) => {
-    
+    e.preventDefault()
     const form = new FormData();
     form.append("id", id);
     form.append("header", header);
@@ -103,7 +101,7 @@ export default function Home({
       method: "PATCH",
       body: form,
     });
-    e.preventDefault()
+    
   };
 
   const handleSubmit_monitors = async (
@@ -115,7 +113,7 @@ export default function Home({
     phone,
     image
   ) => {
-   
+    e.preventDefault()
     const form = new FormData();
     form.append("id", id);
     form.append("name", name);
@@ -128,11 +126,11 @@ export default function Home({
       method: "PATCH",
       body: form,
     });
-    e.preventDefault()
+    
   };
 
   const delete_activity = async (e,id) => {
-    
+    e.preventDefault()
     const form = new FormData();
     form.append('id', id)
     
@@ -140,14 +138,14 @@ export default function Home({
       method: "DELETE",
       body: form,
     });
-    e.preventDefault()
+    
 
     window.location.reload()
    
   };
 
   const delete_achievement = async (e,id) => {
-    
+    e.preventDefault()
     const form = new FormData();
     form.append('id', id)
 
@@ -155,12 +153,11 @@ export default function Home({
       method: "DELETE",
       body: form,
     });
-    e.preventDefault()
     window.location.reload()
   };
 
   const delete_monitor = async (e,id) => {
-    
+    e.preventDefault()
     const form = new FormData();
     form.append('id', id)
 
@@ -168,7 +165,7 @@ export default function Home({
       method: "DELETE",
       body: form,
     });
-    e.preventDefault()
+    
     window.location.reload()
   };
   if (!isConnected) {
@@ -388,7 +385,7 @@ export default function Home({
                 onChange={(e) => setImage(e.target.files[0])}
               />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary"  >
               Post
             </button>
           </form>
@@ -421,7 +418,7 @@ export default function Home({
                   const [edit, setEdit] = useState(false);
                   if (!edit) {
                     return (
-                      <div
+                      <div key={activity._id}
                         className={styles.flex_content}
                         style={{
                           backgroundImage: `url(${
@@ -455,7 +452,7 @@ export default function Home({
                     );
                   }
                   return (
-                    <div className={styles.flex_content}>
+                    <div key={activity._id} className={styles.flex_content}>
                       <div className="row">
                         <div className="col-12">
                           <i
@@ -549,7 +546,7 @@ export default function Home({
                 const [edit, setEdit] = useState(false);
                 if (!edit) {
                   return (
-                    <div
+                    <div key={activity._id}
                       className={styles.flex_content}
                       style={{
                         backgroundImage: `url(${
@@ -582,8 +579,8 @@ export default function Home({
                     </div>
                   );
                 }
-                return (
-                  <div className={styles.flex_content}>
+                return ( 
+                  <div  key={activity._id} className={styles.flex_content}>
                     <div className="row">
                       <div className="col-12">
                         <i
@@ -747,7 +744,7 @@ export default function Home({
                   const [edit, setEdit] = useState(false);
                   if (!edit) {
                     return (
-                      <div className={styles.flex_content_monitor}>
+                      <div key={monitor._id} className={styles.flex_content_monitor}>
                         <div className="container">
                           <div className="row">
                             <div className="col-12 col-md-6 order-md-2">
@@ -787,7 +784,7 @@ export default function Home({
                     );
                   }
                   return (
-                    <div className={styles.flex_content_monitor}>
+                    <div key={monitor._id} className={styles.flex_content_monitor}>
                       <div className="row">
                         <div className="col-12">
                           <i
