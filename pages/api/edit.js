@@ -1,54 +1,64 @@
 import { ObjectId } from "bson";
 import { connectToDatabase } from "../../util/mongodb";
 import nextConnect from "next-connect";
-import multer from "multer";
 import {v2 as cloudinary} from "cloudinary";
-
-
-const upload =multer({dest: "/temp"})
-
 
 const handler = nextConnect();
 
-handler.patch(upload.single('image'), async (req,res)=>{
-    const {db} = await connectToDatabase();
+handler.patch(async (req,res)=>{
+  const {db} = await connectToDatabase();
+    
+  
+  if(req.body.image){
+      const img = await cloudinary.uploader.upload(req.body.image);
+      const image = img.secure_url;
 
-    let image;
-    if(req.file){
-        const img = await cloudinary.uploader.upload(req.file.path);
-        image = img.secure_url;
-    }
-    const {id, header, content} = req.body;
-    const data = await db.collection('Achievements').updateOne({_id: ObjectId(id)},{$set:{Header:header, Content: content, ...(image && {image})
-    }});
-    res.json(data);
+      const id = req.body.id;
+      const header = req.body.header;
+      const content = req.body.content;
+      const data = await db.collection('Achievements').updateOne({_id: ObjectId(id)},{$set:{Header:header, Content: content, ...(image && {image})}});
+      res.json(data);
+  }
+ else{
+  const id = req.body.id;
+  const header = req.body.header;
+  const content = req.body.content;
+  const data = await db.collection('Achievements').updateOne({_id: ObjectId(id)},{$set:{Header:header, Content: content}});
+  res.json(data);
+ }
 })
 
-handler.post(upload.single('image'), async (req,res)=>{
+
+
+handler.post(async (req,res)=>{
     const {db} = await connectToDatabase();
     
-    let image;
-    if(req.file){
-        const img = await cloudinary.uploader.upload(req.file.path);
-        image = img.secure_url;
+    
+    if(req.body.image){
+        const img = await cloudinary.uploader.upload(req.body.image);
+        const image = img.secure_url;
+
+        const header = req.body.header;
+        const content = req.body.content;
+        const data = await db.collection('Achievements').insertOne({Header:header, Content: content, image: image});
+        res.json(data);
     }
-    const {header, content} = req.body;
-    const data = await db.collection('Achievements').insertOne({Header:header, Content: content, image: image});
-    res.json(data);
+    else{
+      const header = req.body.header;
+      const content = req.body.content;
+      const data = await db.collection('Achievements').insertOne({Header:header, Content: content});
+      res.json(data);
+    }
 })
 
-handler.delete(upload.single('image'), async (req,res)=>{
+
+
+handler.delete(async (req,res)=>{
   const {db} = await connectToDatabase();
-  const {id} = req.body;
- 
+
+  const id = req.body.id;
   await db.collection('Achievements').deleteOne({_id: ObjectId(id)});
   res.statusCode(200);
 })
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 export default handler;

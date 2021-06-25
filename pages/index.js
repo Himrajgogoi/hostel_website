@@ -42,65 +42,148 @@ export default function Home({
     }
   });
 
+
+  const getBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+    });
+
+
   const post_submit = async (e,flag, header, content, image) => {
-    const form = new FormData();
-    form.append("header", header);
-    form.append("content", content);
-    form.append("image", image);
 
-    console.log("called");
+    let img = null;
+    if(image){
+      img = await getBase64(image);
+    }
 
+    const form = {
+      header: header,
+      content: content,
+      image: img
+    }
     if (flag === "activities_post") {
-      const data =await axios.post("/api/edit_activities",form);
+      await axios.post("/api/edit_activities",form)
+      .then(res=>{
+        console.log("success");
+      })
+      .catch(err=>console.log(err.message));
 
     } else if (flag === "achievements_post") {
-      const data =await axios.post("/api/edit",form);
+      await axios.post("/api/edit",form)
+      .then(res=>{
+        console.log("success");
+      })
+      .catch(err=>console.log(err));
       
     }
   };
 
   const post_monitor = async (e,name, designation, quote, phone, image) => {
- 
-    const form = new FormData();
-    form.append("name", name);
-    form.append("designation", designation);
-    form.append("quote", quote);
-    form.append("image", image);
-    form.append("phone", phone);
+     
+    if(image){
+      const img = await getBase64(image);
 
-    const data = await fetch("/api/edit_monitors", {
-      method: "POST",
-      body: form,
-    });
+      const form = {
+        name: name,
+        designation: designation, 
+        quote: quote, 
+        phone: phone,
+        image: img
+      }
+      await axios.post("/api/edit_monitors",form)
+        .then(res=>{
+          console.log("success");
+        })
+        .catch(err=>console.log(err.message));
+  
+    }
+    else{
+      const form = {
+        name: name,
+        designation: designation, 
+        quote: quote, 
+        phone: phone,
+        image: null
+      }
+      await axios.post("/api/edit_monitors",form)
+        .then(res=>{
+          console.log("success");
+        })
+        .catch(err=>console.log(err.message));
+  
+    }
+    
   };
 
   const handleSubmit = async (e,id, header, content, image) => {
-    const form = new FormData();
-    form.append("id", id);
-    form.append("header", header);
-    form.append("content", content);
-    form.append("image", image);
 
-    const data = await fetch("/api/edit", {
-      method: "PATCH",
-      body: form,
-    });
+    if(image){
+      const img = await getBase64(image);
+      const form = {
+        id: id,
+        header: header,
+        content: content,
+        image: img
+      }
+      await axios.patch("/api/edit",form)
+        .then(res=>{
+          console.log("success");
+        })
+        .catch(err=>console.log(err.message));
+  
+    }
+    else{
+      const form = {
+        id: id,
+        header: header,
+        content: content,
+        image: null
+      }
+      await axios.patch("/api/edit",form)
+        .then(res=>{
+          console.log("success");
+        })
+        .catch(err=>console.log(err.message));
+  
+    }
+    
     
   };
 
   const handleSubmit_activities = async (e,id, header, content, image) => {
-   
-    const form = new FormData();
-    form.append("id", id);
-    form.append("header", header);
-    form.append("content", content);
-    form.append("image", image);
-    const data = await fetch("/api/edit_activities", {
-      method: "PATCH",
-      body: form,
-    });
     
-  };
+    if(image){
+      const img = await getBase64(image);
+      const form = {
+        id: id,
+        header: header,
+        content: content,
+        image: img
+      }
+      await axios.patch("/api/edit_activities",form)
+        .then(res=>{
+          console.log("success");
+        })
+        .catch(err=>console.log(err.message));
+    }
+
+    else{
+      const form = {
+      id: id,
+      header: header,
+      content: content,
+      image: null
+    }
+    await axios.patch("/api/edit_activities",form)
+      .then(res=>{
+        console.log("success");
+      })
+      .catch(err=>console.log(err.message));
+   
+    
+  };}
 
   const handleSubmit_monitors = async (
     e,
@@ -112,59 +195,95 @@ export default function Home({
     image
   ) => {
    
-    const form = new FormData();
-    form.append("id", id);
-    form.append("name", name);
-    form.append("designation", designation);
-    form.append("quote", quote);
-    form.append("image", image);
-    form.append("phone", phone);
+    if(image){
+      const img = await getBase64(image);
 
-    const data = await fetch("/api/edit_monitors", {
-      method: "PATCH",
-      body: form,
-    });
+      const form = {
+        id:id,
+        name: name,
+        designation: designation, 
+        quote: quote, 
+        phone: phone,
+        image: img
+      }
+      await axios.patch("/api/edit_monitors",form)
+        .then(res=>{
+          console.log("success");
+        })
+        .catch(err=>console.log(err.message));
+  
+    }
+    else{
+      const form = {
+        id:id,
+        name: name,
+        designation: designation, 
+        quote: quote, 
+        phone: phone,
+        image: null
+      }
+      await axios.patch("/api/edit_monitors",form)
+        .then(res=>{
+          console.log("success");
+        })
+        .catch(err=>console.log(err.message));
+  
+    }
     
   };
 
   const delete_activity = async (e,id) => {
   
-    const form = new FormData();
-    form.append('id', id)
-    
-    await fetch("/api/edit_activities", {
-      method: "DELETE",
-      body: form,
-    });
-    
+   const form ={
+      id:id
+   }
+      await fetch("/api/edit_activities", {
+        method: "DELETE",
+        body: JSON.stringify(form),
+        headers:{
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res=>window.location.reload())
+      .catch(err=>{ window.location.reload()});
+  
 
-    window.location.reload()
-   
   };
 
   const delete_achievement = async (e,id) => {
-  
-    const form = new FormData();
-    form.append('id', id)
-
+    
+    const form ={
+      id:id
+    }
     await fetch("/api/edit", {
       method: "DELETE",
-      body: form,
+      body: JSON.stringify(form),
+      headers:{
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res=>window.location.reload())
+    .catch(err=>{
+      window.location.reload()
     });
-    window.location.reload()
   };
 
   const delete_monitor = async (e,id) => {
-  
-    const form = new FormData();
-    form.append('id', id)
-
+    const form ={
+      id:id
+    }
     await fetch("/api/edit_monitors", {
       method: "DELETE",
-      body: form,
+      body: JSON.stringify(form),
+      headers:{
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res=>window.location.reload())
+    .catch(err=>{
+      window.location.reload()
     });
-    
-    window.location.reload()
+   
   };
   if (!isConnected) {
     return (
@@ -591,7 +710,7 @@ export default function Home({
                               activity._id,
                               header ?? activity.Header,
                               content ?? activity.Content,
-                              image
+                              image??null
                             )
                           }
                         >
@@ -724,7 +843,7 @@ export default function Home({
             <h2 className={styles.box_header}>From present Monitors,</h2>
           </div>
           <div className="col-12 col-md-1 offset-md-5">
-            {monitors.length < 4 && loggedIn ? (
+            {monitors.length < 5 && loggedIn ? (
               <i
                 className="fa fa-plus fa-lg"
                 onClick={() => {
