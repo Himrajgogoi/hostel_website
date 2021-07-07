@@ -1,0 +1,72 @@
+
+.activities_achievements{
+    min-height: 40vh;
+    margin: 4vh 6.5vw; 
+    padding: 3vh 5vw;
+}
+
+.flex_container{
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+.flex_content{
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid grey; 
+    min-height: 50vh;
+    min-width: 70vw;
+    margin: 2vh 1vw; 
+    padding: 2vh 1vw;
+}
+
+.flex_content:hover{
+    transform: scale(1.06);
+    transition: 300ms ease-in-out;
+}
+
+
+@media screen and (min-width: 900px) {
+    .flex_content{
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 1px solid grey; 
+        min-height: 50vh;
+        min-width: 0vh;
+        margin: 2vh 1vw; 
+        padding: 2vh 1vw;
+        flex: 1 0 33%;
+    }
+
+    
+    
+}
+
+.hover_underline_animation h2{
+    display: inline-block;
+    position: relative;
+    color: #000000;
+}
+  
+.hover_underline_animation h2:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #053f5c;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+  
+.hover_underline_animation:hover h2:after{
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+

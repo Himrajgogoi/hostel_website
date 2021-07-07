@@ -54,7 +54,7 @@ function Header() {
         <span
           className="navbar-brand"
           href="#"
-          style={{ marginLeft: "2vw", marginRight: "55vw" }}
+          style={{ marginLeft: "2vw", marginRight: "50vw" }}
         >
             <img alt="hostel image" src="/hostel/logo.jpg" className="img-fluid" height="45vh" width="45vw"/>
           <b>Octave</b>
@@ -70,6 +70,10 @@ function Header() {
             <li className={styles.item}>
               <a href="/brief_history" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Brief History</span></a>
             </li>
+            <li className={styles.item}>
+              <a href="/gallery" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Gallery</span></a>
+            </li>
+           
             <li className={styles.item} onClick={() => setModal(!modal)}>
               <span  className={styles.hover_underline_animation}>Sign In</span>
             </li>

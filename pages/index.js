@@ -68,14 +68,14 @@ export default function Home({
       .then(res=>{
         console.log("success");
       })
-      .catch(err=>console.log(err.message));
+      .catch(err=>alert(err.message));
 
     } else if (flag === "achievements_post") {
       await axios.post("/api/edit",form)
       .then(res=>{
         console.log("success");
       })
-      .catch(err=>console.log(err));
+      .catch(err=>alert(err.message));
       
     }
   };
@@ -96,7 +96,7 @@ export default function Home({
         .then(res=>{
           console.log("success");
         })
-        .catch(err=>console.log(err.message));
+        .catch(err=>alert(err.message));
   
     }
     else{
@@ -111,13 +111,13 @@ export default function Home({
         .then(res=>{
           console.log("success");
         })
-        .catch(err=>console.log(err.message));
+        .catch(err=>alert(err.message));
   
     }
     
   };
 
-  const handleSubmit = async (e,id, header, content, image) => {
+  const handleSubmit = async (e,id, header, content, image, public_id) => {
 
     if(image){
       const img = await getBase64(image);
@@ -125,13 +125,14 @@ export default function Home({
         id: id,
         header: header,
         content: content,
-        image: img
+        image: img,
+        public_id: public_id
       }
       await axios.patch("/api/edit",form)
         .then(res=>{
           console.log("success");
         })
-        .catch(err=>console.log(err.message));
+        .catch(err=>alert(err.message));
   
     }
     else{
@@ -145,14 +146,14 @@ export default function Home({
         .then(res=>{
           console.log("success");
         })
-        .catch(err=>console.log(err.message));
+        .catch(err=>alert(err.message));
   
     }
     
     
   };
 
-  const handleSubmit_activities = async (e,id, header, content, image) => {
+  const handleSubmit_activities = async (e,id, header, content, image, public_id) => {
     
     if(image){
       const img = await getBase64(image);
@@ -160,13 +161,14 @@ export default function Home({
         id: id,
         header: header,
         content: content,
-        image: img
+        image: img,
+        public_id: public_id
       }
       await axios.patch("/api/edit_activities",form)
         .then(res=>{
           console.log("success");
         })
-        .catch(err=>console.log(err.message));
+        .catch(err=>alert(err.message));
     }
 
     else{
@@ -180,7 +182,7 @@ export default function Home({
       .then(res=>{
         console.log("success");
       })
-      .catch(err=>console.log(err.message));
+      .catch(err=>alert(err.message));
    
     
   };}
@@ -192,7 +194,8 @@ export default function Home({
     designation,
     quote,
     phone,
-    image
+    image,
+    public_id
   ) => {
    
     if(image){
@@ -204,13 +207,14 @@ export default function Home({
         designation: designation, 
         quote: quote, 
         phone: phone,
-        image: img
+        image: img,
+        public_id: public_id
       }
       await axios.patch("/api/edit_monitors",form)
         .then(res=>{
           console.log("success");
         })
-        .catch(err=>console.log(err.message));
+        .catch(err=>alert(err.message));
   
     }
     else{
@@ -226,16 +230,17 @@ export default function Home({
         .then(res=>{
           console.log("success");
         })
-        .catch(err=>console.log(err.message));
+        .catch(err=>alert(err.message));
   
     }
     
   };
 
-  const delete_activity = async (e,id) => {
+  const delete_activity = async (e,id,public_id) => {
   
    const form ={
-      id:id
+      id:id,
+      image: public_id
    }
       await fetch("/api/edit_activities", {
         method: "DELETE",
@@ -245,15 +250,16 @@ export default function Home({
         }
       })
       .then(res=>window.location.reload())
-      .catch(err=>{ window.location.reload()});
+      .catch(err=>alert(err.message));
   
 
   };
 
-  const delete_achievement = async (e,id) => {
+  const delete_achievement = async (e,id,public_id) => {
     
     const form ={
-      id:id
+      id:id,
+      image: public_id
     }
     await fetch("/api/edit", {
       method: "DELETE",
@@ -263,14 +269,13 @@ export default function Home({
       }
     })
     .then(res=>window.location.reload())
-    .catch(err=>{
-      window.location.reload()
-    });
+    .catch(err=>alert(err.message));
   };
 
-  const delete_monitor = async (e,id) => {
+  const delete_monitor = async (e,id,public_id) => {
     const form ={
-      id:id
+      id:id,
+      image: public_id
     }
     await fetch("/api/edit_monitors", {
       method: "DELETE",
@@ -280,9 +285,7 @@ export default function Home({
       }
     })
     .then(res=>window.location.reload())
-    .catch(err=>{
-      window.location.reload()
-    });
+    .catch(err=>alert(err.message));
    
   };
   if (!isConnected) {
@@ -357,7 +360,7 @@ export default function Home({
                 to mold our boarders into individuals who can survive in this
                 fast changing world. One must learn to be resourceful as well as
                 be able to manage situations in order to grow in today's world
-                and what better place to learn all this than a hostel.
+                and what better place to learn all this than in Octave, the best boys hostel in Jorhat Engineering College.
               </p>
             </div>
           </div>
@@ -560,7 +563,7 @@ export default function Home({
                         {loggedIn ? (
                           <i
                             className="fa fa-trash fa-lg" style={{color:'white'}}
-                            onClick={(e) => delete_activity(e,activity._id)}
+                            onClick={(e) => delete_activity(e,activity._id, activity.Public_id)}
                           ></i>
                         ) : (
                           <div></div>
@@ -582,7 +585,8 @@ export default function Home({
                                 activity._id,
                                 header ?? activity.Header,
                                 content ?? activity.Content,
-                                image
+                                image,
+                                activity.Public_id??null
                               )
                             }
                           >
@@ -688,7 +692,7 @@ export default function Home({
                       {loggedIn ? (
                         <i
                           className="fa fa-trash fa-lg" style={{color:'white'}}
-                          onClick={(e) => delete_achievement(e,activity._id)}
+                          onClick={(e) => delete_achievement(e,activity._id,activity.Public_id)}
                         ></i>
                       ) : (
                         <div></div>
@@ -710,7 +714,8 @@ export default function Home({
                               activity._id,
                               header ?? activity.Header,
                               content ?? activity.Content,
-                              image??null
+                              image??null,
+                              activity.Public_id??null
                             )
                           }
                         >
@@ -889,7 +894,7 @@ export default function Home({
                               {loggedIn ? (
                                 <i
                                   className="fa fa-trash fa-lg"
-                                  onClick={(e) => delete_monitor(e,monitor._id)}
+                                  onClick={(e) => delete_monitor(e,monitor._id, monitor.Public_id)}
                                 ></i>
                               ) : (
                                 <div></div>
@@ -916,7 +921,8 @@ export default function Home({
                                 designation ?? monitor.Designation,
                                 quote ?? monitor.Quote,
                                 phone ?? monitor.Phone,
-                                image
+                                image,
+                                monitor.Public_id??null
                               )
                             }
                           >
