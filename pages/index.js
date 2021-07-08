@@ -354,7 +354,7 @@ export default function Home({
                 hostels, we have produced some of the most well established
                 individuals in Assam as well as in India and abroad. We nurture
                 a sense of brotherhood among us that transcends the walls of
-                this hostel; borthers for life, as we all say, once an Octavian
+                this hostel; brothers for life, as we all say, once an Octavian
                 always an Octavian. College life is one of the most pivotal part
                 of our lives, full of learning, failing and succeeding; we try
                 to mold our boarders into individuals who can survive in this
@@ -555,8 +555,8 @@ export default function Home({
                         ) : (
                           <div></div>
                         )}
-                        <h1 className={styles.content}>{activity.Header}</h1>
-                        <small className={styles.content}>
+                        <h1 className={styles.content_shadow_header}>{activity.Header}</h1>
+                        <small className={styles.content_shadow}>
                           {activity.Content}
                         </small>
                         <br></br>
@@ -684,8 +684,8 @@ export default function Home({
                       ) : (
                         <div></div>
                       )}
-                      <h1 className={styles.content}>{activity.Header}</h1>
-                      <small className={styles.content}>
+                      <h1 className={styles.content_shadow_header}>{activity.Header}</h1>
+                      <small className={styles.content_shadow}>
                         {activity.Content}
                       </small>
                       <br></br>
