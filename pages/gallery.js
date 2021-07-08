@@ -88,7 +88,7 @@ function Gallery({ isConnected, gallery }) {
               <h2>Gallery</h2>
             </div>
             <div className="col-12 col-md-1">
-              {loggedIn ? (
+              {loggedIn && gallery.length < 20? (
                 <i
                   className="fa fa-plus fa-lg"
                   onClick={() => setModal(!modal)}
@@ -168,6 +168,24 @@ function Gallery({ isConnected, gallery }) {
           }
         `}</style>
         <Footer />
+      </div>
+    );
+  }
+  else{
+    return (
+      <div>
+        <Head>
+          <title>Octave | gallery</title>
+          <link rel="icon" href="/logo_fvt.ico"></link>
+        </Head>
+        <Header />
+        <div className="container">
+          <p style={{ textAlign: "center" }}>
+            Could not connect to the server. Try checking your internet
+            connection!
+          </p>
+        </div>
+        <Footer/>
       </div>
     );
   }
