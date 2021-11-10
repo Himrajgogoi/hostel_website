@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import styles from "../styles/Footer.module.css";
 
-function Footer({ isConnected, contact }) {
+function Footer({ isConnected, contact, superintendent }) {
   if (isConnected) {
     return (
       <footer className={styles.foot}>
@@ -14,7 +14,7 @@ function Footer({ isConnected, contact }) {
               <b className={styles.text}>Superintendent of Hostel: </b>
               <br></br>
               <small className={styles.text}>
-                Mr. Bijay Kumar Roy: +91 9954322064
+                {superintendent[0].Name}: {superintendent[0].Phone}
               </small>
               <br></br>
               <br></br>

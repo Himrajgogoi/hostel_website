@@ -1,8 +1,5 @@
 import Head from "next/head";
-import Header from "../shared/Header";
 import { connectToDatabase } from "../util/mongodb";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "font-awesome/css/font-awesome.min.css";
 import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import Footer from "../shared/Footer";
@@ -15,6 +12,7 @@ export default function Home({
   activities,
   achievements,
   monitors,
+  superintendent
 }) {
   
 
@@ -30,13 +28,16 @@ export default function Home({
   const [flag, setFlag] = useState(null);
   const [modal, setModal] = useState(false);
   const [monitor_post, setMonitor] = useState(false);
+  const [superSir_modal, setSuperSirModal] = useState(false);
 
   ///check user
   const [loggedIn, setLoggedIn] = useState(false);
 
   fire.auth().onAuthStateChanged((user) => {
-    if (user) {
-      setLoggedIn(true);
+    if(user){
+      if (user.uid === process.env.USER_ID) {
+        setLoggedIn(true);
+      }
     } else {
       setLoggedIn(false);
     }
@@ -50,39 +51,43 @@ export default function Home({
     reader.onerror = error => reject(error);
     });
 
-
+  
+    /// posting new activity/achievement
   const post_submit = async (e,flag, header, content, image) => {
 
     let img = null;
-    if(image){
+    if(image !== null && header !== null && content !== null){
       img = await getBase64(image);
+      const form = {
+        header: header,
+        content: content,
+        image: img
+      }
+      if (flag === "activities_post") {
+        axios.post("/api/edit_activities",form)
+        .then(res=>{
+          console.log("success");
+        })
+        .catch(err=>alert(err.message));
+  
+      } else if (flag === "achievements_post") {
+        axios.post("/api/edit",form)
+        .then(res=>{
+          console.log("success");
+        })
+        .catch(err=>alert(err.message));
+        
+      }
     }
-
-    const form = {
-      header: header,
-      content: content,
-      image: img
-    }
-    if (flag === "activities_post") {
-      await axios.post("/api/edit_activities",form)
-      .then(res=>{
-        console.log("success");
-      })
-      .catch(err=>alert(err.message));
-
-    } else if (flag === "achievements_post") {
-      await axios.post("/api/edit",form)
-      .then(res=>{
-        console.log("success");
-      })
-      .catch(err=>alert(err.message));
-      
+    else{
+      alert("some fileds are missing!");
     }
   };
 
+  /// posting new monitor
   const post_monitor = async (e,name, designation, quote, phone, image) => {
      
-    if(image){
+    if(image!== null && designation!==null && quote !== null && phone !== null && name !== null){
       const img = await getBase64(image);
 
       const form = {
@@ -92,7 +97,7 @@ export default function Home({
         phone: phone,
         image: img
       }
-      await axios.post("/api/edit_monitors",form)
+      axios.post("/api/edit_monitors",form)
         .then(res=>{
           console.log("success");
         })
@@ -100,23 +105,13 @@ export default function Home({
   
     }
     else{
-      const form = {
-        name: name,
-        designation: designation, 
-        quote: quote, 
-        phone: phone,
-        image: null
-      }
-      await axios.post("/api/edit_monitors",form)
-        .then(res=>{
-          console.log("success");
-        })
-        .catch(err=>alert(err.message));
-  
+      alert("some fileds are missing!");
+
     }
     
   };
-
+  
+  /// updating achivements
   const handleSubmit = async (e,id, header, content, image, public_id) => {
 
     if(image){
@@ -128,7 +123,7 @@ export default function Home({
         image: img,
         public_id: public_id
       }
-      await axios.patch("/api/edit",form)
+      axios.patch("/api/edit",form)
         .then(res=>{
           console.log("success");
         })
@@ -142,7 +137,7 @@ export default function Home({
         content: content,
         image: null
       }
-      await axios.patch("/api/edit",form)
+      axios.patch("/api/edit",form)
         .then(res=>{
           console.log("success");
         })
@@ -152,7 +147,8 @@ export default function Home({
     
     
   };
-
+  
+  /// updating activities
   const handleSubmit_activities = async (e,id, header, content, image, public_id) => {
     
     if(image){
@@ -164,7 +160,7 @@ export default function Home({
         image: img,
         public_id: public_id
       }
-      await axios.patch("/api/edit_activities",form)
+      axios.patch("/api/edit_activities",form)
         .then(res=>{
           console.log("success");
         })
@@ -178,7 +174,7 @@ export default function Home({
       content: content,
       image: null
     }
-    await axios.patch("/api/edit_activities",form)
+    axios.patch("/api/edit_activities",form)
       .then(res=>{
         console.log("success");
       })
@@ -186,7 +182,8 @@ export default function Home({
    
     
   };}
-
+ 
+  ///updating monitors
   const handleSubmit_monitors = async (
     e,
     id,
@@ -210,7 +207,7 @@ export default function Home({
         image: img,
         public_id: public_id
       }
-      await axios.patch("/api/edit_monitors",form)
+      axios.patch("/api/edit_monitors",form)
         .then(res=>{
           console.log("success");
         })
@@ -226,7 +223,7 @@ export default function Home({
         phone: phone,
         image: null
       }
-      await axios.patch("/api/edit_monitors",form)
+      axios.patch("/api/edit_monitors",form)
         .then(res=>{
           console.log("success");
         })
@@ -235,14 +232,15 @@ export default function Home({
     }
     
   };
-
+  
+  /// deleting activity
   const delete_activity = async (e,id,public_id) => {
   
    const form ={
       id:id,
       image: public_id
    }
-      await fetch("/api/edit_activities", {
+      fetch("/api/edit_activities", {
         method: "DELETE",
         body: JSON.stringify(form),
         headers:{
@@ -254,14 +252,15 @@ export default function Home({
   
 
   };
-
+  
+  /// deleting achievement
   const delete_achievement = async (e,id,public_id) => {
     
     const form ={
       id:id,
       image: public_id
     }
-    await fetch("/api/edit", {
+    fetch("/api/edit", {
       method: "DELETE",
       body: JSON.stringify(form),
       headers:{
@@ -271,13 +270,14 @@ export default function Home({
     .then(res=>window.location.reload())
     .catch(err=>alert(err.message));
   };
-
+  
+  /// deleting monitor
   const delete_monitor = async (e,id,public_id) => {
     const form ={
       id:id,
       image: public_id
     }
-    await fetch("/api/edit_monitors", {
+    fetch("/api/edit_monitors", {
       method: "DELETE",
       body: JSON.stringify(form),
       headers:{
@@ -288,6 +288,22 @@ export default function Home({
     .catch(err=>alert(err.message));
    
   };
+ 
+  /// updating super sir
+  const updateSuperSir = () =>{
+
+    const data = {
+      id: superintendent[0]._id,
+      Name: name??superintendent[0].Name,
+      Phone: phone??superintendent[0].Phone
+    };
+
+    axios.put('/api/edit_superintendent', data)
+    .then(res=>{
+      window.location.reload();
+    })
+    .catch(error=>alert(error.message));
+  }
   if (!isConnected) {
     return (
       <div>
@@ -295,7 +311,6 @@ export default function Home({
           <title>Octave | home</title>
           <link rel="icon" href="/logo_fvt.ico"></link>
         </Head>
-        <Header />
         <div className="container">
           <p style={{ textAlign: "center" }}>
             Could not connect to the server. Try checking your internet
@@ -308,21 +323,14 @@ export default function Home({
   }
   else{
   const FooterPage = () => {
-    return <Footer isConnected={isConnected} contact={monitors} />;
+    return <Footer isConnected={isConnected} contact={monitors} superintendent={superintendent} />;
   };
 
   return (
     <div>
       <Head>
         <title>Octave | home</title>
-        <link rel="icon" href="/logo_fvt.ico"></link>
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap"
-          rel="stylesheet"
-        />
       </Head>
-      <Header />
       <div
         className="container"
         style={{
@@ -446,7 +454,7 @@ export default function Home({
                   farewell, distinguised guests. It is christened with all the
                   trophies, medals and commendations that our hostel has
                   garnered over the years. Apart from all this, it also serves
-                  as a place of rejuvination. One can relax, have a chat, watch
+                  as a place of rejuvenation. One can relax, have a chat, watch
                   some tv and even engage in some carrom with each other. We
                   believe an individual must excel not only in academics, but
                   also in other activities, as such we have indoor games like
@@ -999,22 +1007,48 @@ export default function Home({
               </div>
             </div>
           </div>
+        
         </div>
+        <Modal isOpen={superSir_modal}>
+            <ModalBody>
+            <i
+            className="fa fa-close fa-lg"
+            onClick={() => setSuperSirModal(!superSir_modal)}
+            ></i>
+            <form>
+            <div className="form-group">
+              <label for="header">
+                <b>Name</b>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="header"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label for="phone">
+                <b>Phone</b>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="phone"
+                onChange={(e) => setPhone(e.target.value)}
+              />
+              </div>
+              <button type="button" className="btn btn-primary" onClick={()=>updateSuperSir()}>
+              Update
+            </button>
+            </form>
+            </ModalBody>
+          </Modal>
+          {loggedIn?<button type="button" className="btn btn-primary" onClick={()=>setSuperSirModal(!superSir_modal)}>
+              Update SuperSir
+          </button>:<div></div>}
       </div>
-      <FooterPage />
-      <style jsx global>{`
-        h2,
-        p,
-        small {
-          font-family: "Raleway", sans-serif;
-        }
-
-        h5,
-        h1 {
-          font-family: "Raleway", sans-serif;
-          font-weight: bold;
-        }
-      `}</style>
+      <FooterPage/>
     </div>
   );
       }
@@ -1033,12 +1067,16 @@ export async function getServerSideProps(context) {
   const monitors = await db.collection("Monitors").find({}).toArray();
   const monitors_props = JSON.parse(JSON.stringify(monitors));
 
+  const superintendent = await db.collection("Superintendent").find({}).toArray();
+  const superintendent_props = JSON.parse(JSON.stringify(superintendent));
+
   return {
     props: {
       isConnected: isConnected,
       activities: activities_props,
       achievements: achievements_props,
       monitors: monitors_props,
+      superintendent: superintendent_props
     },
   };
 }

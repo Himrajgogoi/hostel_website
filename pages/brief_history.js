@@ -1,9 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import Footer from "../shared/Footer";
-import Header from "../shared/Header";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "font-awesome/css/font-awesome.min.css";
 import styles from "../styles/Home.module.css";
 
 function brief_history() {
@@ -11,14 +8,7 @@ function brief_history() {
     <div>
       <Head>
         <title>Octave | Brief History</title>
-        <link rel="icon" href="/logo_fvt.ico"></link>
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap"
-          rel="stylesheet"
-        />
       </Head>
-      <Header />
       <div className={styles.alternate_container}>
         <div className={styles.alternate_content}>
           <div className={styles.hover_underline_animation}>
@@ -78,19 +68,7 @@ function brief_history() {
         </div>
 
       </div>
-      <style jsx global>{`
-        h2,
-        p,
-        small {
-          font-family: "Raleway", sans-serif;
-        }
-
-        h5,
-        h1 {
-          font-family: "Raleway", sans-serif;
-          font-weight: bold;
-        }
-      `}</style>
+    
       <Footer />
     </div>
   );

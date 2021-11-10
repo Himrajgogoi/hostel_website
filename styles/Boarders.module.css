@@ -1,0 +1,38 @@
+.container{
+    min-height: 80vh;
+    margin: 4vh 6.5vw; 
+    padding: 3vh 5vw;
+}
+
+.search_container{
+    min-height: 30vh;
+    margin: 4vh 6.5vw; 
+    padding: 3vh 5vw;
+    border-bottom: 1px ridge grey;
+}
+
+
+
+.hover_underline_animation h2{
+    display: inline-block;
+    position: relative;
+    color: #000000;
+}
+  
+.hover_underline_animation h2:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #053f5c;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+  
+.hover_underline_animation:hover h2:after{
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}

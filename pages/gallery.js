@@ -1,9 +1,6 @@
 import Head from "next/head";
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "font-awesome/css/font-awesome.min.css";
 import { connectToDatabase } from "../util/mongodb";
-import Header from "../shared/Header";
 import Footer from "../shared/Footer";
 import styles from "../styles/Gallery.module.css";
 import fire from "../config/fire_config";
@@ -16,9 +13,11 @@ function Gallery({ isConnected, gallery }) {
   const [modal, setModal] = useState(false);
 
   fire.auth().onAuthStateChanged((user) => {
-    if (user) {
+   if(user){
+    if (user.uid === process.env.USER_ID) {
       setLoggedIn(true);
-    } else {
+    }
+   } else {
       setLoggedIn(false);
     }
   });
@@ -71,18 +70,10 @@ function Gallery({ isConnected, gallery }) {
       <div>
         <Head>
           <title>Octave | gallery</title>
-          <link rel="icon" href="/logo_fvt.ico"></link>
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap"
-            rel="stylesheet"
-          />
         </Head>
-        <Header />
         <div className="container">
           <div className="row">
             <div
-              className="col-12 col-md-6"
               className={styles.hover_underline_animation}
             >
               <h2>Gallery</h2>
@@ -155,18 +146,7 @@ function Gallery({ isConnected, gallery }) {
             </div>
           </div>
         </div>
-        <style jsx global>{`
-          h2,
-          small {
-            font-family: "Raleway", sans-serif;
-          }
-
-          h5,
-          h1 {
-            font-family: "Raleway", sans-serif;
-            font-weight: bold;
-          }
-        `}</style>
+      
         <Footer />
       </div>
     );
@@ -176,9 +156,7 @@ function Gallery({ isConnected, gallery }) {
       <div>
         <Head>
           <title>Octave | gallery</title>
-          <link rel="icon" href="/logo_fvt.ico"></link>
         </Head>
-        <Header />
         <div className="container">
           <p style={{ textAlign: "center" }}>
             Could not connect to the server. Try checking your internet

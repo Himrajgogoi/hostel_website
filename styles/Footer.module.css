@@ -1,6 +1,7 @@
 .foot{
     min-height: 20vh;
     background-color: #212222;
+    min-width: 100vw;
 
  }
  .text{

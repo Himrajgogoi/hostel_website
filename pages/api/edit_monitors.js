@@ -73,7 +73,7 @@ handler.delete(async (req,res)=>{
         const img = req.body.image;
         await cloudinary.uploader.destroy(img);
       }
-    await db.collection('Monitors').deleteOne({_id: ObjectId(id)})
+    db.collection('Monitors').deleteOne({_id: ObjectId(id)})
     .then((resp)=>res.json(resp))
     .catch((err)=>res.json(err));
 })
