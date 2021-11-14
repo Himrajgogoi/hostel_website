@@ -66,14 +66,14 @@ export default function Home({
       if (flag === "activities_post") {
         axios.post("/api/edit_activities",form)
         .then(res=>{
-          console.log("success");
+          alert("Success. Refresh to see changes");
         })
         .catch(err=>alert(err.message));
   
       } else if (flag === "achievements_post") {
         axios.post("/api/edit",form)
         .then(res=>{
-          console.log("success");
+          alert("Success. Refresh to see changes");
         })
         .catch(err=>alert(err.message));
         
@@ -99,7 +99,7 @@ export default function Home({
       }
       axios.post("/api/edit_monitors",form)
         .then(res=>{
-          console.log("success");
+          alert("Success. Refresh to see changes");
         })
         .catch(err=>alert(err.message));
   
@@ -125,7 +125,7 @@ export default function Home({
       }
       axios.patch("/api/edit",form)
         .then(res=>{
-          console.log("success");
+          alert("Success. Refresh to see changes");
         })
         .catch(err=>alert(err.message));
   
@@ -139,7 +139,7 @@ export default function Home({
       }
       axios.patch("/api/edit",form)
         .then(res=>{
-          console.log("success");
+          alert("Success. Refresh to see changes");
         })
         .catch(err=>alert(err.message));
   
@@ -162,7 +162,7 @@ export default function Home({
       }
       axios.patch("/api/edit_activities",form)
         .then(res=>{
-          console.log("success");
+          alert("Success. Refresh to see changes");
         })
         .catch(err=>alert(err.message));
     }
@@ -176,7 +176,7 @@ export default function Home({
     }
     axios.patch("/api/edit_activities",form)
       .then(res=>{
-        console.log("success");
+        alert("Success. Refresh to see changes");
       })
       .catch(err=>alert(err.message));
    
@@ -209,7 +209,7 @@ export default function Home({
       }
       axios.patch("/api/edit_monitors",form)
         .then(res=>{
-          console.log("success");
+          alert("Success. Refresh to see changes");
         })
         .catch(err=>alert(err.message));
   
@@ -225,7 +225,7 @@ export default function Home({
       }
       axios.patch("/api/edit_monitors",form)
         .then(res=>{
-          console.log("success");
+          alert("Success. Refresh to see changes");
         })
         .catch(err=>alert(err.message));
   

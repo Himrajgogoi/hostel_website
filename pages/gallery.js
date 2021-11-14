@@ -39,7 +39,7 @@ function Gallery({ isConnected, gallery }) {
       await axios
         .post("/api/edit_gallery", body)
         .then((res) => {
-          console.log("success");
+          alert("Success. Refresh to see changes");
           window.location.reload();
         })
         .catch(err=>alert(err.message));
