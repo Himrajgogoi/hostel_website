@@ -36,7 +36,7 @@ function Gallery({ isConnected, gallery }) {
       const body = {
         image: img,
       };
-      await axios
+      axios
         .post("/api/edit_gallery", body)
         .then((res) => {
           alert("Success. Refresh to see changes");
@@ -52,7 +52,7 @@ function Gallery({ isConnected, gallery }) {
       image: public_id,
     };
 
-    await fetch("/api/edit_gallery", {
+    fetch("/api/edit_gallery", {
       method: "DELETE",
       body: JSON.stringify(body),
       headers:{

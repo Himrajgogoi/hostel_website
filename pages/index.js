@@ -539,7 +539,8 @@ export default function Home({
               <div></div>
             )}
           </div>
-          <div className="row">
+        </div>
+        <div className="row">
             <div className="col-12">
               <div className={styles.flex_container}>
                 {activities.map((activity) => {
@@ -646,7 +647,6 @@ export default function Home({
               </div>
             </div>
           </div>
-        </div>
       </div>
 
       <div className={styles.activities_achievements}>
@@ -866,8 +866,9 @@ export default function Home({
             ) : (
               <div></div>
             )}
-          </div>
-          <div className="row">
+          </div>     
+        </div>
+        <div className="row">
             <div className="col-12">
               <div className={styles.flex_container}>
                 {monitors.map((monitor) => {
@@ -1007,8 +1008,6 @@ export default function Home({
               </div>
             </div>
           </div>
-        
-        </div>
         <Modal isOpen={superSir_modal}>
             <ModalBody>
             <i
