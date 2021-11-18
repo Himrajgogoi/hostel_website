@@ -30,11 +30,13 @@ function Footer({ isConnected, contact, superintendent }) {
               </ul>
             </div>
             <div className="col-12 col-md-4 offset-md-2">
-              <i className={`${styles.text} fa fa-location-arrow fa-lg`}></i>
-              <br></br>
-              <small className={styles.text}>
-                Jorhat Engineering College, Garmur, Jorhat, Assam, 785007, India
-              </small>
+            <a href="https://jecassam.ac.in/" target="_blank">
+            <i className={`${styles.text} fa fa-location-arrow fa-lg`}></i>
+            <br></br>
+            <small className={styles.text}>
+              Jorhat Engineering College, Garmur, Jorhat, Assam, 785007, India
+            </small>
+            </a>
               <br></br>
               <br></br>
               <small className={styles.text}>Courtesy of 2019-2023 batch</small>
@@ -52,9 +54,24 @@ function Footer({ isConnected, contact, superintendent }) {
       <div className="container" style={{ padding: "2vh 3vw 2vh 3vh" }}>
         <div className="row">
           <div className="col-12 col-md-6">
-            <a href="/">
+            <a href="/"  className={styles.text}>
               {" "}
               <i className={`${styles.text} fa fa-arrow-left fa-lg`}></i> Home
+            </a>
+            <br></br>
+            <a href="/brief_history"  className={styles.text}>
+              {" "}
+              Brief History
+            </a>
+            <br></br>
+            <a href="/gallery"  className={styles.text}>
+              {" "}
+              Gallery
+            </a>
+            <br></br>
+            <a href="/boarders"  className={styles.text}>
+              {" "}
+              Boarders
             </a>
             <br></br>
             <br></br>
@@ -63,11 +80,13 @@ function Footer({ isConnected, contact, superintendent }) {
             </small>
           </div>
           <div className="col-12 col-md-4 offset-md-2">
+            <a href="https://jecassam.ac.in/" target="_blank">
             <i className={`${styles.text} fa fa-location-arrow fa-lg`}></i>
             <br></br>
             <small className={styles.text}>
               Jorhat Engineering College, Garmur, Jorhat, Assam, 785007, India
             </small>
+            </a>
             <br></br>
             <br></br>
             <small className={styles.text}>Courtesy of 2019-2023 batch</small>

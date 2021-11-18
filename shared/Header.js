@@ -56,8 +56,10 @@ function Header() {
           href="#"
           style={{ marginLeft: "2vw", marginRight: "40vw" }}
         >
-            <img alt="hostel image" src="/hostel/logo.jpg" className="img-fluid" height="45vh" width="45vw"/>
-          <b>Octave</b>
+           <a href="/"  style={{textDecoration:'none', color:'black'}}>
+              <img alt="hostel image" src="/hostel/logo.jpg" className="img-fluid" height="45vh" width="45vw"/>
+             <b>Octave</b>
+           </a>
         </span>
         <NavbarToggler onClick={() => setisOpen(!isOpen)}>
           <span className="navbar-toggler-icon"></span>
