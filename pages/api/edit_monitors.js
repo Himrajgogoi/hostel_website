@@ -9,7 +9,12 @@ handler.patch(async (req,res)=>{
     const {db} = await connectToDatabase();
 
     if(req.body.image){
-        const img = await cloudinary.uploader.upload(req.body.image);
+        
+        if(req.body.public_id){
+            const del_id = req.body.public_id;
+            await cloudinary.uploader.destroy(del_id);
+        }
+        const img = await cloudinary.uploader.upload(req.body.image,{folder: 'octave'});
         const image = img.secure_url;
         const public_id = img.public_id;
         const id = req.body.id;
@@ -17,10 +22,7 @@ handler.patch(async (req,res)=>{
         const designation = req.body.designation;
         const quote= req.body.quote;
         const phone = req.body.phone;
-        if(req.body.public_id){
-            const del_id = req.body.public_id;
-            await cloudinary.uploader.destroy(del_id);
-          }
+       
         const data = await db.collection('Monitors').updateOne({_id: ObjectId(id)},{$set:{Name:name, Designation:designation,Phone:phone, Quote:quote,Public_id:public_id,...(image &&{image})}});
         res.json(data);
     
@@ -41,7 +43,7 @@ handler.post(async (req,res)=>{
     const {db} = await connectToDatabase();
     
     if(req.body.image){
-        const img = await cloudinary.uploader.upload(req.body.image);
+        const img = await cloudinary.uploader.upload(req.body.image,{folder: 'octave'});
         const image = img.secure_url;
         const public_id = img.public_id;
 
@@ -77,6 +79,16 @@ handler.delete(async (req,res)=>{
     .then((resp)=>res.json(resp))
     .catch((err) => res.status(500).json({error:err}));
 })
+
+
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '3mb',
+
+        }
+    }
+}
 
 
 

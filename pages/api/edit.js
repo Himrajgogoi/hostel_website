@@ -10,17 +10,19 @@ handler.patch(async (req,res)=>{
     
   
   if(req.body.image){
-      const img = await cloudinary.uploader.upload(req.body.image);
+
+    if(req.body.public_id){
+      const del_id = req.body.public_id;
+      await cloudinary.uploader.destroy(del_id);
+    }
+      const img = await cloudinary.uploader.upload(req.body.image, {folder:'octave'});
       const image = img.secure_url;
       const public_id = img.public_id;
 
       const id = req.body.id;
       const header = req.body.header;
       const content = req.body.content;
-      if(req.body.public_id){
-        const del_id = req.body.public_id;
-        await cloudinary.uploader.destroy(del_id);
-      }
+  
       const data = await db.collection('Achievements').updateOne({_id: ObjectId(id)},{$set:{Header:header, Content: content,Public_id:public_id, ...(image && {image})}});
       res.json(data);
   }
@@ -40,7 +42,7 @@ handler.post(async (req,res)=>{
     
     
     if(req.body.image){
-        const img = await cloudinary.uploader.upload(req.body.image);
+        const img = await cloudinary.uploader.upload(req.body.image, {folder:'octave'});
         const image = img.secure_url;
         const public_id = img.public_id;
 
@@ -71,5 +73,14 @@ handler.delete(async (req,res)=>{
   .then((resp)=>res.json(resp))
   .catch((err) => res.status(500).json({error:err}));
 })
+
+export const config = {
+  api: {
+      bodyParser: {
+          sizeLimit: '3mb',
+
+      }
+  }
+}
 
 export default handler;

@@ -34,4 +34,13 @@ handler.patch(async (req,res)=>{
     .catch((err) => res.status(500).json({error:err}));
 });
 
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '3mb',
+
+        }
+    }
+}
+
 export default handler;

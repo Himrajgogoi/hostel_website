@@ -10,4 +10,13 @@ handler.get(async (req,res)=>{
     res.json(resp);
 })
 
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '3mb',
+
+        }
+    }
+}
+
 export default handler;
