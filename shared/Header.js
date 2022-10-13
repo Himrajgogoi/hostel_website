@@ -6,7 +6,6 @@ import {
   Modal,
   ModalBody,
 } from "reactstrap";
-import Link from 'next/link';
 import styles from "../styles/Header.module.css";
 import "font-awesome/css/font-awesome.min.css";
 import fire from "../config/fire_config";
@@ -57,10 +56,10 @@ function Header() {
           href="#"
           style={{ marginLeft: "2vw", marginRight: "40vw" }}
         >
-           <Link href="/"  style={{textDecoration:'none', color:'black'}}>
+           <a href="/"  style={{textDecoration:'none', color:'black'}}>
               <img alt="hostel image" src="/hostel/logo.jpg" className="img-fluid" height="45vh" width="45vw"/>
              <b>Octave</b>
-           </Link>
+           </a>
         </span>
         <NavbarToggler onClick={() => setisOpen(!isOpen)}>
           <span className="navbar-toggler-icon"></span>
@@ -68,16 +67,16 @@ function Header() {
         <Collapse isOpen={isOpen} navbar>
           <ul className="navbar-nav">
             <li className={styles.item}>
-              <Link href="/" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Home</span></Link>
+              <a href="/" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Home</span></a>
             </li>
             <li className={styles.item}>
-              <Link href="/brief_history" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Brief History</span></Link>
+              <a href="/brief_history" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Brief History</span></a>
             </li>
             <li className={styles.item}>
-              <Link href="/gallery" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Gallery</span></Link>
+              <a href="/gallery" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Gallery</span></a>
             </li>
             <li className={styles.item}>
-              <Link href="/boarders" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Boarders</span></Link>
+              <a href="/boarders" className={styles.hover_underline_animation} style={{textDecoration:'none'}}> <span>Boarders</span></a>
             </li>
             <li className={styles.item} onClick={() => setModal(!modal)}>
               <span  className={styles.hover_underline_animation}>Sign In</span>
