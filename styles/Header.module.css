@@ -8,6 +8,7 @@
     display: inline-block;
     position: relative;
     color: #000000;
+    cursor: pointer;
 }
   
 .hover_underline_animation:after{

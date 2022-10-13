@@ -550,7 +550,7 @@ export default function Home({
                       <div key={activity._id}
                         className={styles.flex_content}
                         style={{
-                          backgroundImage: `url(${
+                          backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 0) 0, #000 100%),url(${
                             activity.image ??
                             "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg/700px-Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg"
                           }`,
@@ -678,7 +678,7 @@ export default function Home({
                     <div key={activity._id}
                       className={styles.flex_content}
                       style={{
-                        backgroundImage: `url(${
+                        backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 0) 0, #000 100%),url(${
                           activity.image ??
                           "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg/700px-Jorhat_Engineering_College_%2C_Jorhat_%2C_Assam%2C_India_-_Vikramjit_Kakati_2012.jpg"
                         }`,

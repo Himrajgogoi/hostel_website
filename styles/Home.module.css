@@ -25,13 +25,13 @@
 .content_shadow{
     margin-top: 30vh;
     color: white;
-    text-shadow: 1px 1px #000000;
+    
 }
 
 .content_shadow_header{
     margin-top: 30vh;
     color: white;
-    text-shadow: 2px 3px #000000;
+    
 }
 
 .flex_container{
@@ -58,6 +58,17 @@
     margin: 2vh 1vw; 
     padding: 2vh 1vw;
 }
+
+.image{
+    max-height: 500px;
+    width: 100%;
+}
+
+.image:hover{
+    transform: scale(1.06);
+    transition: 300ms ease-in-out;
+}
+
 @media screen and (min-width: 900px) {
     .flex_content{
        
@@ -78,6 +89,11 @@
         padding: 2vh 1vw;
         flex: 1 0 33%;
     }
+
+    .image{
+        max-height: 300px;
+        width: 100%;
+    }
     
 }
 
@@ -90,15 +106,7 @@
 .box_header{
     border-bottom: 1px solid grey;
 }
-.image{
-    height: 90%;
-    width: 100%;
-}
 
-.image:hover{
-    transform: scale(1.06);
-    transition: 300ms ease-in-out;
-}
 
 
 .hover_underline_animation h2{

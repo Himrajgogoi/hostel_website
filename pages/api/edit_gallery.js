@@ -26,7 +26,7 @@ handler.delete(async (req,res)=>{
     await cloudinary.uploader.destroy(img);
     db.collection("Gallery").deleteOne({_id: ObjectId(id)})
     .then((resp)=>res.json(resp))
-    .catch((err)=>res.json(err));
+    .catch((err) => res.status(500).json({error:err}));
 })
 
 export default handler;

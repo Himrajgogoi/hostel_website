@@ -23,7 +23,7 @@ handler.put(async(req,res)=>{
    db.collection('Boarders').updateOne({uid:req.body.uid},{$set:{name:req.body.username,email:req.body.email,phone:req.body.phone,
    batch: req.body.batch, branch: req.body.branch, currently_at:req.body.currently_at}})
    .then(resp=>res.json(resp))
-   .catch(error=>res.json(error.message));
+   .catch((err) => res.status(500).json({error:err}));
     
 });
 
@@ -31,7 +31,7 @@ handler.patch(async (req,res)=>{
     const {db} = await connectToDatabase();
     db.collection('Boarders').deleteOne({uid:req.query.uid})
     .then((resp)=>res.json(resp))
-    .catch((err)=>res.json(err));
+    .catch((err) => res.status(500).json({error:err}));
 });
 
 export default handler;

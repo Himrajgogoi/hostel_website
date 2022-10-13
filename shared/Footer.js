@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import styles from "../styles/Footer.module.css";
+import NextLink from "next/link";
 
 function Footer({ isConnected, contact, superintendent }) {
   if (isConnected) {
@@ -54,25 +55,21 @@ function Footer({ isConnected, contact, superintendent }) {
       <div className="container" style={{ padding: "2vh 3vw 2vh 3vh" }}>
         <div className="row">
           <div className="col-12 col-md-6">
-            <a href="/"  className={styles.text}>
-              {" "}
-              <i className={`${styles.text} fa fa-arrow-left fa-lg`}></i> Home
-            </a>
+            <NextLink href="/">
+              <span style={{textDecoration:'none', color:'white', cursor:'pointer'}}>Home</span>
+            </NextLink>
             <br></br>
-            <a href="/brief_history"  className={styles.text}>
-              {" "}
-              Brief History
-            </a>
+            <NextLink href="/brief_history">
+               <span style={{textDecoration:'none', color:'white', cursor:'pointer'}}>Brief History</span>
+            </NextLink>
             <br></br>
-            <a href="/gallery"  className={styles.text}>
-              {" "}
-              Gallery
-            </a>
+            <NextLink href="/gallery">
+              <span style={{textDecoration:'none', color:'white', cursor:'pointer'}}>Gallery</span>
+            </NextLink>
             <br></br>
-            <a href="/boarders"  className={styles.text}>
-              {" "}
-              Boarders
-            </a>
+            <NextLink href="/boarders">
+               <span style={{textDecoration:'none', color:'white', cursor:'pointer'}}>Boarders</span>
+            </NextLink>
             <br></br>
             <br></br>
             <small>

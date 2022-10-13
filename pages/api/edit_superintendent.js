@@ -9,7 +9,7 @@ handler.put(async (req,res)=>{
     
     db.collection("Superintendent").updateOne({_id: ObjectId(req.body.id)},{$set:{Name: req.body.Name,Phone:req.body.Phone}})
     .then(response=>res.json(response))
-    .catch(error=>alert(error.message));
+    .catch((err) => res.status(500).json({error:err}));
 })
 
 export default handler;
