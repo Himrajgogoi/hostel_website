@@ -6,6 +6,7 @@ import Footer from "../shared/Footer";
 import { Modal, ModalBody } from "reactstrap";
 import fire from "../config/fire_config";
 import axios from "axios";
+import imageCompression from "browser-image-compression";
 
 export default function Home({
   isConnected,
@@ -57,7 +58,14 @@ export default function Home({
 
     let img = null;
     if(image !== null && header !== null && content !== null){
-      img = await getBase64(image);
+      
+      const compressedImage = await imageCompression(image, {
+        maxSizeMB: 2,
+        useWebWorker: true,
+      });
+
+      img = await getBase64(compressedImage);
+      
       const form = {
         header: header,
         content: content,

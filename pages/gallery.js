@@ -6,6 +6,7 @@ import styles from "../styles/Gallery.module.css";
 import fire from "../config/fire_config";
 import { Modal, ModalBody } from "reactstrap";
 import axios from "axios";
+import imageCompression from "browser-image-compression";
 
 function Gallery({ isConnected, gallery }) {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -32,7 +33,12 @@ function Gallery({ isConnected, gallery }) {
 
   const handleSubmit = async (image) => {
     if (image) {
-      const img = await getBase64(image);
+      const compressedImage = await imageCompression(image, {
+        maxSizeMB: 2,
+        useWebWorker: true,
+      });
+
+      const img = await getBase64(compressedImage);
       const body = {
         image: img,
       };

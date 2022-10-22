@@ -10,6 +10,7 @@
     "@popperjs/core": "^2.9.2",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
+    "browser-image-compression": "^2.0.0",
     "cloudinary": "^1.25.2",
     "firebase": "^8.6.5",
     "firebase-admin": "^9.11.1",
