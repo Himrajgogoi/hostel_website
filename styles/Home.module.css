@@ -22,16 +22,27 @@
     color: white;
 }
 
-.content_shadow{
+/* .content_shadow{
     margin-top: 30vh;
     color: white;
     
 }
 
 .content_shadow_header{
+    margin-top: 25vh;
+    color: white;
+    position: sticky;
+    
+} */
+
+.card_text{
     margin-top: 30vh;
     color: white;
-    
+}
+
+.card_text:hover{
+    transform: scale(0.8);
+    transition: all .5s;
 }
 
 .flex_container{
@@ -41,15 +52,31 @@
     justify-content: center;
 }
 
+.parent{
+    height: 28em;
+    width: 33em;
+    margin: 2vh 1vw; 
+    overflow: hidden;
+}
+
 .flex_content{
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     border: 1px solid grey; 
-    min-height: 20vh;
-    margin: 2vh 1vw; 
-    padding: 2vh 1vw;
+    height: 100%;
+    width: 100%;
+    padding: 1em 1em;
 }
+
+ 
+.flex_content:hover
+{
+   transform: scale(1.2);
+   transition: all .5s;
+}
+
+
 
 
 .flex_content_monitor{
@@ -70,16 +97,9 @@
 }
 
 @media screen and (min-width: 900px) {
-    .flex_content{
-       
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        border: 1px solid grey; 
-        min-height: 20vh;
-        margin: 2vh 1vw; 
-        padding: 2vh 1vw;
-        flex: 1 0 33%;
+
+    .flex_container{
+        justify-content: flex-start;
     }
 
     .flex_content_monitor{
