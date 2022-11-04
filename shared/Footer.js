@@ -44,7 +44,7 @@ function Footer({ isConnected, contact, superintendent }) {
             </div>
           </div>
           <small>
-            <b className={styles.text}>Copyright@Himraj Gogoi-2021</b>
+            <b className={styles.text}>{'Copyright © '}HimrajGogoi {new Date().getFullYear()}{'.'}</b>
           </small>
         </div>
       </footer>
@@ -73,7 +73,7 @@ function Footer({ isConnected, contact, superintendent }) {
             <br></br>
             <br></br>
             <small>
-              <b className={styles.text}>Copyright@Himraj Gogoi</b>
+              <b className={styles.text}>{'Copyright © '}HimrajGogoi {new Date().getFullYear()}{'.'}</b>
             </small>
           </div>
           <div className="col-12 col-md-4 offset-md-2">

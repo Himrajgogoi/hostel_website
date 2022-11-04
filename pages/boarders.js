@@ -67,10 +67,10 @@ function boarders() {
 
   /// posting new boarder
   const handlePost = () =>{
-    if(username !== null && email !== null && 
-      password !== null && phone !== null && 
-      batch !== null && branch !== null && 
-      currently_at !==  null){
+    if(username && email && 
+      password && phone && 
+      batch && branch && 
+      currently_at){
           var body = {
              username: username,
              email: email,

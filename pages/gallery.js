@@ -177,8 +177,12 @@ function Gallery({ isConnected, gallery }) {
 export async function getServerSideProps(context) {
   const { client, db } = await connectToDatabase();
   const isConnected = await client.isConnected();
-  const gallery = await db.collection("Gallery").find({}).toArray();
-  const gallery_props = JSON.parse(JSON.stringify(gallery));
+  let gallery_props;
+
+  if(isConnected){
+    const gallery = await db.collection("Gallery").find({}).toArray();
+    gallery_props = JSON.parse(JSON.stringify(gallery));
+  }
   return {
     props: { gallery: gallery_props, isConnected: isConnected },
   };

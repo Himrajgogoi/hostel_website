@@ -301,6 +301,8 @@ export default function Home({
       })
       .catch((error) => alert(error.message));
   };
+
+  
   if (!isConnected) {
     return (
       <div>
@@ -1125,20 +1127,23 @@ export async function getServerSideProps(context) {
   const { client, db } = await connectToDatabase();
 
   const isConnected = await client.isConnected();
-  const activities = await db.collection("Activities").find({}).toArray();
-  const activities_props = JSON.parse(JSON.stringify(activities));
-
-  const achievements = await db.collection("Achievements").find({}).toArray();
-  const achievements_props = JSON.parse(JSON.stringify(achievements));
-
-  const monitors = await db.collection("Monitors").find({}).toArray();
-  const monitors_props = JSON.parse(JSON.stringify(monitors));
-
-  const superintendent = await db
-    .collection("Superintendent")
-    .find({})
-    .toArray();
-  const superintendent_props = JSON.parse(JSON.stringify(superintendent));
+  let achievements_props,activities_props,monitors_props,superintendent_props;
+  if(isConnected){
+    const activities = await db.collection("Activities").find({}).toArray();
+    activities_props = JSON.parse(JSON.stringify(activities));
+  
+    const achievements = await db.collection("Achievements").find({}).toArray();
+    achievements_props = JSON.parse(JSON.stringify(achievements));
+  
+    const monitors = await db.collection("Monitors").find({}).toArray();
+    monitors_props = JSON.parse(JSON.stringify(monitors));
+  
+    const superintendent = await db
+      .collection("Superintendent")
+      .find({})
+      .toArray();
+    superintendent_props = JSON.parse(JSON.stringify(superintendent));
+  }
 
   return {
     props: {
